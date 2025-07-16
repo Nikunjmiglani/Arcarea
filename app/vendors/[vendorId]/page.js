@@ -1,7 +1,7 @@
 import connectMongo from "@/lib/mongoose";
 import User from "@/models/User";
 import Service from "@/models/Service";
-import BookingForm from "@/components/BookingForm";
+
 
 export default async function VendorPage({ params }) {
   const vendorId = params.vendorId;
@@ -46,7 +46,7 @@ export default async function VendorPage({ params }) {
 
       {/* Booking Form */}
       <h2 className="text-2xl font-semibold mb-4">Request a Booking</h2>
-      <BookingForm serviceId={services[0]?._id || ""} />
+      
     </div>
   );
 }
