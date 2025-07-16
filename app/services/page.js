@@ -59,29 +59,19 @@ export default function ServicesPage() {
       {/* 📦 Service List */}
       {services.length === 0 && <p>No services found.</p>}
 
-      {
-  services.map((service) => (
-    <div
-      key={service._id}
-      className="bg-white rounded-lg shadow hover:shadow-lg transition p-4 border"
-    >
-      <img
-        src={service.image || "/placeholder.jpg"}
-        alt={service.title}
-        className="h-40 w-full object-cover rounded-md mb-4"
-      />
-      <h3 className="text-xl font-semibold mb-1">{service.title}</h3>
-      <p className="text-gray-600 mb-1">{service.description}</p>
-      <p className="text-gray-800 font-medium mb-1">₹{service.price}</p>
-      <p className="text-sm italic text-gray-500 mb-2">
-        By {service.vendorName}
-      </p>
-      <span className="inline-block bg-gray-200 text-gray-800 text-xs uppercase font-semibold px-2 py-1 rounded">
-        {service.category}
-      </span>
-    </div>
-  ))
-}
+      {services.map((service) => (
+  <div key={service._id} className="border p-4 mb-4 rounded">
+    <Link href={`/services/${service._id}`}>
+      <h3 className="text-xl font-semibold hover:underline cursor-pointer">{service.title}</h3>
+    </Link>
+    <p className="text-gray-700">{service.description}</p>
+    <p className="text-sm text-gray-500">₹{service.price}</p>
+    <p className="text-sm text-gray-600 italic">By {service.vendor?.name}</p>
+    <span className="inline-block mt-2 text-xs bg-gray-200 px-2 py-1 rounded">
+      {service.category}
+    </span>
+  </div>
+))}
     </div>
   );
 }
