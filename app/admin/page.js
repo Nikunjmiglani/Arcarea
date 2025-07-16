@@ -1,94 +1,125 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 
 export default function AdminPage() {
-  const [vendors, setVendors] = useState([]);
-  const [form, setForm] = useState({
-    vendor: "",
+  const [formData, setFormData] = useState({
     title: "",
     description: "",
     price: "",
-    category: "interior",
+    category: "Interior",
+    subcategory: "Residential Interior",
+    image: "",
   });
 
-  useEffect(() => {
-  const getVendors = async () => {
-    const res = await fetch("/api/users/vendors");
-    const data = await res.json();
-    console.log("Vendors:", data); // ✅ See what comes
-    setVendors(data);
-    if (data.length > 0) {
-      setForm((prev) => ({ ...prev, vendor: data[0]._id }));
-    }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  getVendors();
-}, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.vendor) {
-      alert("Please select a vendor");
-      return;
-    }
 
     const res = await fetch("/api/services", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+      body: JSON.stringify(formData),
     });
 
     if (res.ok) {
-      alert("Service added!");
+      alert("Service created successfully");
+      setFormData({
+        title: "",
+        description: "",
+        price: "",
+        category: "Interior",
+        subcategory: "Residential Interior",
+        image: "",
+      });
     } else {
-      alert("Error adding service");
+      alert("Error creating service");
     }
   };
 
+  const subcategoriesMap = {
+    Interior: ["Residential Interior", "Commercial Interior"],
+    Architecture: ["Residential Architecture", "Landscape Architecture"],
+    Furniture: ["Custom Furniture", "Modular Furniture"],
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-10">
-      <select
-        onChange={(e) => setForm({ ...form, vendor: e.target.value })}
-        value={form.vendor}
-        className="input"
-      >
-        <option value="">Select Vendor</option>
-        {vendors.map((v) => (
-          <option key={v._id} value={v._id}>
-            {v.name}
-          </option>
-        ))}
-      </select>
+    <div className="max-w-xl mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-4">Add a New Service</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          type="text"
+          name="title"
+          placeholder="Title"
+          value={formData.title}
+          onChange={handleChange}
+          className="w-full border p-2 rounded"
+          required
+        />
 
-      <input
-        placeholder="Title"
-        className="input"
-        onChange={(e) => setForm({ ...form, title: e.target.value })}
-        required
-      />
-      <textarea
-        placeholder="Description"
-        className="input"
-        onChange={(e) => setForm({ ...form, description: e.target.value })}
-        required
-      />
-      <input
-        type="number"
-        placeholder="Price"
-        className="input"
-        onChange={(e) => setForm({ ...form, price: e.target.value })}
-        required
-      />
-      <select
-        onChange={(e) => setForm({ ...form, category: e.target.value })}
-        className="input"
-        value={form.category}
-      >
-        <option value="interior">Interior Design</option>
-        <option value="architecture">Architecture</option>
-        <option value="furniture">Furniture Design</option>
-      </select>
+        <textarea
+          name="description"
+          placeholder="Description"
+          value={formData.description}
+          onChange={handleChange}
+          className="w-full border p-2 rounded"
+          required
+        />
 
-      <button className="btn">Add Service</button>
-    </form>
+        <input
+          type="number"
+          name="price"
+          placeholder="Price"
+          value={formData.price}
+          onChange={handleChange}
+          className="w-full border p-2 rounded"
+          required
+        />
+
+        <select
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+          className="w-full border p-2 rounded"
+        >
+          {Object.keys(subcategoriesMap).map((cat) => (
+            <option key={cat} value={cat}>{cat}</option>
+          ))}
+        </select>
+
+        <select
+          name="subcategory"
+          value={formData.subcategory}
+          onChange={handleChange}
+          className="w-full border p-2 rounded"
+        >
+          {(subcategoriesMap[formData.category] || []).map((sub) => (
+            <option key={sub} value={sub}>
+              {sub}
+            </option>
+          ))}
+        </select>
+
+        <input
+          type="text"
+          name="image"
+          placeholder="Image URL"
+          value={formData.image}
+          onChange={handleChange}
+          className="w-full border p-2 rounded"
+        />
+
+        <button
+          type="submit"
+          className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+        >
+          Create Service
+        </button>
+      </form>
+    </div>
   );
 }

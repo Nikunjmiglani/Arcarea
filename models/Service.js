@@ -6,6 +6,7 @@ const ServiceSchema = new mongoose.Schema({
   description: String,
   price: Number,
   category: String, // interior, architecture, furniture
+  subcategory: String, 
   images: [String]
 }, { timestamps: true });
 
