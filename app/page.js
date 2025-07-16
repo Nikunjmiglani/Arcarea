@@ -18,6 +18,39 @@ const categories = [
   },
 ];
 
+const highlights = [
+  {
+    title: "1BHK Interior Design",
+    image: "/1bhk.jpg",
+    subcategory: "1BHK Interior Design",
+  },
+  {
+    title: "Office Design",
+    image: "/office.jpg",
+    subcategory: "Office Design",
+  },
+  {
+    title: "Wall Panel Design",
+    image: "/wall.jpg",
+    subcategory: "Wall Panel Design",
+  },
+  {
+    title: "Full House Construction",
+    image: "/construction.jpg",
+    subcategory: "Full House Construction",
+  },
+  {
+    title: "Modular Kitchen Setup",
+    image: "/kitchen.jpg",
+    subcategory: "Modular Kitchen",
+  },
+  {
+    title: "bespoke furniture",
+    image: "/custom.jpg",
+    subcategory: "bespoke furniture",
+  },
+];
+
 export default function HomePage() {
   return (
     <section className="bg-gray-100 min-h-screen pt-16">
@@ -63,6 +96,31 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* Featured Subcategory Highlights */}
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <h2 className="text-2xl font-semibold mb-6 text-gray-800">
+          Popular Services
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {highlights.map((item) => (
+            <Link
+              key={item.title}
+              href={`/subcategories/${item.subcategory.replace(/\s+/g, "-")}`}
+              className="bg-white rounded-lg overflow-hidden shadow hover:shadow-md transition"
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                className="h-48 w-full object-cover"
+              />
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+
       {/* Call to Action */}
       <div className="bg-black text-white py-16 text-center">
         <h2 className="text-3xl font-bold mb-4">
@@ -81,4 +139,3 @@ export default function HomePage() {
     </section>
   );
 }
-

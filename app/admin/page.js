@@ -42,9 +42,9 @@ export default function AdminPage() {
   };
 
   const subcategoriesMap = {
-    Interior: ["Residential Interior", "Commercial Interior"],
+    Interior: ["Residential Interior", "Commercial Interior","1BHK Interior Design","Office Design","Wall Panel Design","Modular Kitchen"],
     Architecture: ["Residential Architecture", "Landscape Architecture"],
-    Furniture: ["Custom Furniture", "Modular Furniture"],
+    Furniture: ["Custom Furniture", "Modular Furniture", "bespoke furniture"],
   };
 
   return (

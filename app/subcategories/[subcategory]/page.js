@@ -1,5 +1,6 @@
 import connectMongo from "@/lib/mongoose";
 import Service from "@/models/Service";
+import Link from "next/link";
 
 export default async function SubcategoryPage({ params }) {
   const subcategorySlug = params.subcategory;
@@ -7,7 +8,8 @@ export default async function SubcategoryPage({ params }) {
 
   await connectMongo();
 
-  const services = await Service.find({ subcategory });
+  // Also populate vendor field
+  const services = await Service.find({ subcategory }).populate("vendor");
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
@@ -20,9 +22,10 @@ export default async function SubcategoryPage({ params }) {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {services.map((service) => (
-            <div
+            <Link
               key={service._id}
-              className="bg-white rounded-lg shadow p-4 border hover:shadow-lg transition"
+              href={`/vendors/${service.vendor._id}`}
+              className="bg-white rounded-lg shadow p-4 border hover:shadow-lg transition block"
             >
               <img
                 src={service.image || "/placeholder.jpg"}
@@ -35,9 +38,9 @@ export default async function SubcategoryPage({ params }) {
                 ₹{service.price}
               </p>
               <p className="text-sm italic text-gray-500">
-                By {service.vendorName}
+                By {service.vendor.name || "Vendor"}
               </p>
-            </div>
+            </Link>
           ))}
         </div>
       )}
