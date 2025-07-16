@@ -103,6 +103,11 @@ export default async function HomePage() {
           ))}
         </div>
       </div>
+      
+      {/* 🔵 Banner 1 - Between Categories and Popular Services */}
+      <div className="max-w-7xl mx-auto px-6 py-6">
+        <img src="/banner1.jpg" alt="Banner 1" className="rounded-lg w-full object-cover shadow" />
+      </div>
 
       {/* Popular Services */}
       <div className="max-w-7xl mx-auto px-6 py-12">
@@ -121,6 +126,10 @@ export default async function HomePage() {
             </Link>
           ))}
         </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 py-6">
+        <img src="/banner2.jpg" alt="Banner 2" className="rounded-lg w-full object-cover shadow" />
       </div>
 
      
