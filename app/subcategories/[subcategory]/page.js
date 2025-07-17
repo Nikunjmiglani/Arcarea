@@ -1,6 +1,7 @@
 import connectMongo from "@/lib/mongoose";
 import Service from "@/models/Service";
 import Link from "next/link";
+import User from "@/models/User";
 
 export default async function SubcategoryPage({ params }) {
   const subcategorySlug = params.subcategory;
