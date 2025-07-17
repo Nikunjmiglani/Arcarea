@@ -170,7 +170,7 @@ export default async function HomePage() {
         {blogs.map((blog, index) => (
           <Link
             key={index}
-            href={`/blogs/${blog.slug}`}
+            href={`/blog/${blog.slug}`}
             className="min-w-[300px] bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden"
           >
             <img
