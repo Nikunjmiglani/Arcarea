@@ -8,7 +8,7 @@ export default defineConfig({
   basePath: '/studio',
   name: 'arcarea_studio',
   title: 'Arcarea CMS',
-  projectId: 'your_project_id',
+  projectId: 'zgtxw8fc',
   dataset: 'production',
   plugins: [deskTool(), visionTool()],
   schema: {

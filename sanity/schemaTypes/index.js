@@ -1,7 +1,7 @@
-import category from "./category";
-import page from "./page";
-import service from "./service";
-import user from "./user";
-import blog from "./blog"; // <-- you added this
+import category from "./categoryType";
+import post from "./postType";
+import author from "./authorType";
+import blockContent from "./blockContentType";
+import blog from "./blog"; 
 
-export const schema = [category, page, service, user, blog]; // ✅ Not schemaTypes
+export const schema = [category, post, author, blockContent, blog];

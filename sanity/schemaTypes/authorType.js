@@ -1,7 +1,7 @@
-import {UserIcon} from '@sanity/icons'
-import {defineArrayMember, defineField, defineType} from 'sanity'
+import { UserIcon } from '@sanity/icons'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 
-export const authorType = defineType({
+const authorType = defineType({
   name: 'author',
   title: 'Author',
   type: 'document',
@@ -9,10 +9,12 @@ export const authorType = defineType({
   fields: [
     defineField({
       name: 'name',
+      title: 'Name',
       type: 'string',
     }),
     defineField({
       name: 'slug',
+      title: 'Slug',
       type: 'slug',
       options: {
         source: 'name',
@@ -20,6 +22,7 @@ export const authorType = defineType({
     }),
     defineField({
       name: 'image',
+      title: 'Image',
       type: 'image',
       options: {
         hotspot: true,
@@ -27,11 +30,12 @@ export const authorType = defineType({
     }),
     defineField({
       name: 'bio',
+      title: 'Bio',
       type: 'array',
       of: [
         defineArrayMember({
           type: 'block',
-          styles: [{title: 'Normal', value: 'normal'}],
+          styles: [{ title: 'Normal', value: 'normal' }],
           lists: [],
         }),
       ],
@@ -44,3 +48,5 @@ export const authorType = defineType({
     },
   },
 })
+
+export default authorType

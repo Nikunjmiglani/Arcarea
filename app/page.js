@@ -1,6 +1,11 @@
+// app/page.js
+
 import Link from "next/link";
 import connectMongo from "@/lib/mongoose";
 import User from "@/models/User";
+import { getLatestBlogs } from "@/sanity/queries/getLatestBlogs";
+import { client } from '@/lib/sanity';
+
 
 const categories = [
   {
@@ -52,23 +57,27 @@ const highlights = [
     subcategory: "Bespoke Furniture",
   },
 ];
+export const revalidate = 60;
 
-const blogs = [
-  { title: "Design Trends 2025", image: "/blogs/blog1.jpg" },
-  { title: "Modern Office Spaces", image: "/blogs/blog2.jpg" },
-  { title: "Home Decor Tips", image: "/blogs/blog3.jpg" },
-  { title: "Maximizing Small Spaces", image: "/blogs/blog4.jpg" },
-  { title: "Sustainable Architecture", image: "/blogs/blog5.jpg" },
-  { title: "Choosing the Right Furniture", image: "/blogs/blog6.jpg" },
-];
+async function getBlogs() {
+  const query = `*[_type == "blog"] | order(_createdAt desc)[0...10] {
+    title,
+    "slug": slug.current,
+    "image": mainImage.asset->url
+  }`;
+  const blogs = await client.fetch(query);
+  return blogs;
+}
 
 export default async function HomePage() {
   await connectMongo();
   const vendors = await User.find({ role: "designer" }).limit(6);
+   const blogs = await getBlogs();
+
 
   return (
     <section className="bg-gray-100 min-h-screen pt-16">
-      {/* Hero Section */}
+      {/* Hero */}
       <div className="max-w-7xl mx-auto px-6 py-20 text-center">
         <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
           Transform Your Space With Expert Designers
@@ -84,7 +93,7 @@ export default async function HomePage() {
         </Link>
       </div>
 
-      {/* Categories Grid */}
+      {/* Categories */}
       <div className="max-w-7xl mx-auto px-6 py-12">
         <h2 className="text-2xl font-semibold mb-6 text-gray-800">Choose by Category</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -103,13 +112,13 @@ export default async function HomePage() {
           ))}
         </div>
       </div>
-      
-      {/* 🔵 Banner 1 - Between Categories and Popular Services */}
+
+      {/* Banner 1 */}
       <div className="max-w-7xl mx-auto px-6 py-6">
         <img src="/banner1.jpg" alt="Banner 1" className="rounded-lg w-full object-cover shadow" />
       </div>
 
-      {/* Popular Services */}
+      {/* Highlights / Popular Services */}
       <div className="max-w-7xl mx-auto px-6 py-12">
         <h2 className="text-2xl font-semibold mb-6 text-gray-800">Popular Services</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -128,13 +137,12 @@ export default async function HomePage() {
         </div>
       </div>
 
+      {/* Banner 2 */}
       <div className="max-w-7xl mx-auto px-6 py-6">
         <img src="/banner2.jpg" alt="Banner 2" className="rounded-lg w-full object-cover shadow" />
       </div>
 
-     
-
-      {/* Popular Vendors */}
+      {/* Vendors */}
       <div className="max-w-7xl mx-auto px-6 py-12">
         <h2 className="text-2xl font-semibold mb-6 text-gray-800">Popular Vendors</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -155,32 +163,37 @@ export default async function HomePage() {
           ))}
         </div>
       </div>
-       {/* 🔥 Blogs Section (Horizontal Scroll) */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <h2 className="text-2xl font-semibold mb-6 text-gray-800">Latest Blogs</h2>
-        <div className="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide">
-          {blogs.map((blog, index) => (
-            <div
-              key={index}
-              className="min-w-[300px] bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden"
-            >
-              <img
-                src={blog.image}
-                alt={blog.title}
-                className="h-40 w-full object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-800">{blog.title}</h3>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
 
-      {/* Call to Action */}
+     <div className="max-w-7xl mx-auto px-6 py-12">
+      <h2 className="text-2xl font-semibold mb-6 text-gray-800">Latest Blogs</h2>
+      <div className="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide">
+        {blogs.map((blog, index) => (
+          <Link
+            key={index}
+            href={`/blogs/${blog.slug}`}
+            className="min-w-[300px] bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden"
+          >
+            <img
+              src={blog.image}
+              alt={blog.title}
+              className="h-40 w-full object-cover"
+            />
+            <div className="p-4">
+              <h3 className="text-lg font-semibold text-gray-800">
+                {blog.title}
+              </h3>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+
+      {/* CTA */}
       <div className="bg-black text-white py-16 text-center">
         <h2 className="text-3xl font-bold mb-4">Are You a Designer or Architect?</h2>
-        <p className="mb-6 text-gray-300">Join our platform and start offering your services to 1000s of users.</p>
+        <p className="mb-6 text-gray-300">
+          Join our platform and start offering your services to 1000s of users.
+        </p>
         <Link
           href="/register"
           className="inline-block bg-white text-black px-6 py-3 rounded hover:bg-gray-200"
