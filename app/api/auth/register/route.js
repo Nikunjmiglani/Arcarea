@@ -12,7 +12,14 @@ export async function POST(req) {
   }
 
   const hashedPassword = await hash(password, 10);
-  const newUser = await User.create({ name, email, password: hashedPassword, role });
+
+  // ✅ Auto-assign admin role to you, default others
+  let finalRole = role || "user";
+  if (email === "nikunj.miglani@gmail.com") {
+    finalRole = "admin"; // 👈 change to your actual email
+  }
+
+  const newUser = await User.create({ name, email, password: hashedPassword, role: finalRole });
 
   return new Response(JSON.stringify({ message: "User registered successfully" }), { status: 201 });
 }

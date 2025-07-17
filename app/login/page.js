@@ -1,7 +1,7 @@
-// app/login/page.js
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -9,13 +9,17 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+    const res = await signIn("credentials", {
+      redirect: false,
+      email: form.email,
+      password: form.password,
     });
-    if (res.ok) router.push("/");
-    else alert("Login failed");
+
+    if (res.ok) {
+      router.push("/"); // or "/admin" if you want to redirect to admin directly
+    } else {
+      alert("Login failed");
+    }
   };
 
   return (
