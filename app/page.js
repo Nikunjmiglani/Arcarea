@@ -10,7 +10,7 @@ import { client } from '@/lib/sanity';
 const categories = [
   {
     title: "Interior",
-    image: "/interior.jpg",
+    image: "/interior.jpeg",
     description: "Residential & Commercial Interior Solutions",
   },
   {
@@ -79,15 +79,15 @@ export default async function HomePage() {
     <section className="bg-gray-100 min-h-screen pt-16">
       {/* Hero */}
       <div className="max-w-7xl mx-auto px-6 py-20 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
+        <h1 className="text-4xl md:text-6xl font-bold font-mono mt-7 text-gray-900 mb-5">
           Transform Your Space With Expert Designers
         </h1>
-        <p className="text-lg md:text-xl text-gray-600 mb-8">
+        <p className="text-lg md:text-xl mt-5  text-gray-600 mb-8">
           Connect with top Interior Designers, Architects & Furniture Experts near you.
         </p>
         <Link
           href="/categories"
-          className="inline-block bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition"
+          className="inline-block bg-black text-white px-10 py-3 rounded-full animate-bounce hover:scale-110 transition-transform duration-200"
         >
           Explore Categories
         </Link>
@@ -95,18 +95,18 @@ export default async function HomePage() {
 
       {/* Categories */}
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <h2 className="text-2xl font-semibold mb-6 text-gray-800">Choose by Category</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <h2 className="text-2xl font-semibold mb-6 text-gray-800">Choose Service</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 ">
           {categories.map((cat) => (
             <Link
               key={cat.title}
               href={`/categories/${cat.title}`}
-              className="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition"
+              className="bg-white rounded-lg overflow-hidden hover:scale-110 transition-transform duration-200"
             >
-              <img src={cat.image} alt={cat.title} className="h-48 w-full object-cover" />
-              <div className="p-4">
-                <h3 className="text-xl font-semibold text-gray-800 mb-1">{cat.title}</h3>
-                <p className="text-sm text-gray-600">{cat.description}</p>
+              <img src={cat.image} alt={cat.title} className="h-48 w-full object-cover " />
+              <div className="p-4 ">
+                <h3 className="text-xl font-semibold font-mono text-center text-gray-800 mb-1">{cat.title}</h3>
+                <p className="text-sm text-center text-gray-600">{cat.description}</p>
               </div>
             </Link>
           ))}
@@ -126,11 +126,11 @@ export default async function HomePage() {
             <Link
               key={item.title}
               href={`/subcategories/${item.subcategory.replace(/\s+/g, "-")}`}
-              className="bg-white rounded-lg overflow-hidden shadow hover:shadow-md transition"
+              className="bg-white rounded-lg overflow-hidden hover:scale-110 transition-transform duration-200"
             >
               <img src={item.image} alt={item.title} className="h-48 w-full object-cover" />
               <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
+                <h3 className="text-lg font-semibold text-center text-gray-800">{item.title}</h3>
               </div>
             </Link>
           ))}
@@ -142,27 +142,30 @@ export default async function HomePage() {
         <img src="/banner2.jpg" alt="Banner 2" className="rounded-lg w-full object-cover shadow" />
       </div>
 
-      {/* Vendors */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <h2 className="text-2xl font-semibold mb-6 text-gray-800">Popular Vendors</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {vendors.map((vendor) => (
-            <Link
-              key={vendor._id}
-              href={`/vendors/${vendor._id}`}
-              className="bg-white rounded-lg shadow p-4 hover:shadow-lg transition"
-            >
-              <img
-                src="/vendor.jpg"
-                alt={vendor.name}
-                className="h-40 w-full object-cover rounded mb-3"
-              />
-              <h3 className="text-xl font-semibold">{vendor.name}</h3>
-              <p className="text-sm text-gray-600">{vendor.email}</p>
-            </Link>
-          ))}
+     {/* Vendors */}
+<div className="max-w-7xl mx-auto px-6 py-12">
+  <h2 className="text-2xl font-semibold mb-8 text-gray-800">Popular Vendors</h2>
+
+  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 place-items-center">
+    {vendors.map((vendor) => (
+      <Link
+        key={vendor._id}
+        href={`/vendors/${vendor._id}`}
+        className="flex flex-col items-center text-center group"
+      >
+        <div className="w-32 h-32 rounded-full overflow-hidden shadow-lg mb-4 transition-transform duration-300 group-hover:scale-110">
+          <img
+            src="/vendor.jpg"
+            alt={vendor.name}
+            className="w-full h-full object-cover"
+          />
         </div>
-      </div>
+        <h3 className="text-lg font-semibold text-gray-800 group-hover:text-black">{vendor.name}</h3>
+      
+      </Link>
+    ))}
+  </div>
+</div>
 
      <div className="max-w-7xl mx-auto px-6 py-12">
       <h2 className="text-2xl font-semibold mb-6 text-gray-800">Latest Blogs</h2>
