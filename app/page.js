@@ -77,9 +77,9 @@ export default async function HomePage() {
   return (
     <section className="bg-gray-100 min-h-screen">
       {/* Hero Section */}
-      <div className="relative w-full h-[90vh]">
+      <div className="relative w-full h-[95vh]">
         <Image
-          src="/vastu-based renovation.png"
+          src="/cropped-vastu-based renovation.png"
           alt="Hero"
           layout="fill"
           objectFit="cover"
@@ -104,7 +104,7 @@ export default async function HomePage() {
       </div>
 
       {/* Categories */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-6 mb-20">
         <h2 className="text-2xl font-semibold mb-6 text-gray-800">Choose Service</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {categories.map((cat) => (
@@ -124,18 +124,16 @@ export default async function HomePage() {
       </div>
 
       {/* Full-width Banner */}
-      <div className="w-full">
-        <Image
-          src="/interior design marketplace.png"
-          alt="Process Steps"
-          width={1920}
-          height={500}
-          className="w-full object-cover"
-        />
-      </div>
+     <div className="w-full">
+  <img
+    src="/cropped-interior design marketplace.png" 
+    alt="Process Steps"
+    className="w-full object-cover h-70"
+  />
+</div>
 
       {/* About Us */}
-      <div className="py-20 px-6 mt-5 md:px-12 lg:px-24 bg-gray-100">
+      <div className="py-10 px-6 mt-5 md:px-12 lg:px-24 bg-gray-100">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold font-mono text-gray-900 mb-6">What We Do</h2>
           <p className="text-lg text-gray-700 mb-8">
@@ -145,14 +143,14 @@ export default async function HomePage() {
             <span className="font-medium text-black"> space planning experts</span>. Our platform is India&rsquo;s first one-click destination to discover and hire top-rated professionals who can bring your dream spaces to life.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-10 text-left text-gray-700">
+          <div className="grid md:grid-cols-2 gap-50 text-left text-gray-700">
             <div>
               <h3 className="text-xl font-semibold text-black mb-2">Why ArcArea?</h3>
               <ul className="list-disc pl-5 space-y-2">
-                <li>✅ Curated & Verified Experts</li>
-                <li>✅ Simplified End-to-End Process</li>
-                <li>✅ Vastu-Aligned Design Options</li>
-                <li>✅ Transparent Pricing</li>
+                <li>Curated & Verified Experts</li>
+                <li>Simplified End-to-End Process</li>
+                <li>Vastu-Aligned Design Options</li>
+                <li>Transparent Pricing</li>
               </ul>
             </div>
             <div>
