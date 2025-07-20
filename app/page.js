@@ -222,25 +222,32 @@ export default async function HomePage() {
         <h2 className="text-2xl font-semibold mb-6 text-gray-800">Latest Blogs</h2>
         <div className="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide">
           {blogs.map((blog, index) => (
-            <Link
-              key={index}
-              href={`/blog/${blog.slug}`}
-              className="min-w-[300px] bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden"
-            >
-              <Image
-                src={blog.image}
-                alt={blog.title}
-                width={400}
-                height={200}
-                className="h-40 w-full object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-800">
-                  {blog.title}
-                </h3>
-              </div>
-            </Link>
-          ))}
+  <Link
+    key={index}
+    href={`/blog/${blog.slug}`}
+    className="min-w-[300px] bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden"
+  >
+    {blog.image ? (
+      <Image
+        src={blog.image}
+        alt={blog.title}
+        width={400}
+        height={160}
+        className="w-full object-cover h-40"
+      />
+    ) : (
+      <div className="h-40 bg-gray-200 flex items-center justify-center text-gray-500">
+        No Image
+      </div>
+    )}
+    <div className="p-4">
+      <h3 className="text-lg font-semibold text-gray-800">
+        {blog.title}
+      </h3>
+    </div>
+  </Link>
+))}
+
         </div>
       </div>
 
