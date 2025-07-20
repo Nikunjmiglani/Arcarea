@@ -4,6 +4,7 @@ import Image from "next/image";
 import kitchenImg from "../public/mainpageimg1.jpg";
 import factoryImg from '@/public/mainpageimg1.jpg'
 import Link from "next/link";
+import ContactForm from "@/components/ContactForm";
 import { FaSearch } from "react-icons/fa";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import connectMongo from "@/lib/mongoose";
@@ -127,18 +128,8 @@ export default async function HomePage() {
     
     <section className="bg-white min-h-screen">
       <div className=" mx-4 sm:mx-20 mt-3"></div>
-     
-
-    
-
-
-  
-
-   <Hero />
-
-  
-
-      {/* Categories */}
+     <Hero />
+ {/* Categories */}
       <div className="max-w-7xl mx-auto px-6 mb-20">
         <h2 className="text-2xl font-semibold mb-6 text-gray-800">Choose Service</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -312,6 +303,8 @@ export default async function HomePage() {
           ))}
         </div>
       </div>
+
+<ContactForm/>
 
       
 
