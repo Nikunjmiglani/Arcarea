@@ -3,7 +3,7 @@
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { CgProfile } from "react-icons/cg";
-import { FaSearch } from "react-icons/fa";
+
 
 export default function Navbar() {
   const { data: session, status } = useSession();
@@ -26,16 +26,7 @@ export default function Navbar() {
       </div>
 
       {/* Search */}
-      <div className="flex-1 max-w-2xl mx-6 hidden lg:flex gap-4">
-        <div className="flex items-center border rounded-2xl px-3 py-2 w-full text-sm text-gray-700">
-          <FaSearch className="text-gray-500 mr-2" />
-          <input
-            type="text"
-            placeholder="Search services..."
-            className="outline-none flex-1 bg-transparent"
-          />
-        </div>
-      </div>
+     
 
       {/* Auth Section */}
       <div className="flex items-center gap-4 text-gray-700">

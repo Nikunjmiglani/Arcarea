@@ -4,6 +4,7 @@ import Image from "next/image";
 import kitchenImg from "../public/mainpageimg1.jpg";
 import factoryImg from '@/public/mainpageimg1.jpg'
 import Link from "next/link";
+import { FaSearch } from "react-icons/fa";
 import connectMongo from "@/lib/mongoose";
 import User from "@/models/User";
 import { client } from '@/lib/sanity';
@@ -122,19 +123,39 @@ export default async function HomePage() {
     <section className="bg-white min-h-screen">
      
 
-      <div className="max-w-7xl mx-auto px-6 py-20 text-center">
+      <div className="max-w-7xl mx-auto flex flex-col px-6 py-20 text-center">
         <h1 className="text-4xl md:text-6xl font-bold font-mono mt-7 text-gray-900 mb-5">
           Transform Your Space With Expert Designers
         </h1>
         <p className="text-lg md:text-xl mt-5 text-gray-600 mb-8">
           Connect with top Interior Designers, Architects & Furniture Experts near you.
         </p>
-        <Link
-          href="/categories"
-          className="inline-block bg-black text-white px-10 py-3 rounded-full animate-bounce hover:scale-110 transition-transform duration-200"
-        >
-          Explore Categories
-        </Link>
+
+        <div className="flex justify-center items-center">
+
+        
+
+         <div className="flex-1 max-w-2xs mx-6 hidden lg:flex gap-4">
+        <div className="flex items-center border rounded-2xl px-3 py-2 w-full text-sm text-gray-700">
+          <FaSearch className="text-gray-500 mr-2" />
+          <input
+            type="text"
+            placeholder="Search services..."
+            className="outline-none flex-1 bg-transparent"
+          />
+        </div>
+      </div>
+       <div className="flex-1 max-w-2xs mx-6 hidden lg:flex gap-4">
+        <div className="flex items-center border rounded-2xl px-3 py-2 w-full text-sm text-gray-700">
+          <FaSearch className="text-gray-500 mr-2" />
+          <input
+            type="text"
+            placeholder="Search services..."
+            className="outline-none flex-1 bg-transparent"
+          />
+        </div>
+      </div>
+      </div>
       </div>
 
       {/* Categories */}
