@@ -24,7 +24,7 @@ export default function ContactForm() {
         <div className="bg-gray-50 p-8 rounded-2xl shadow-lg w-full">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Let's Connect</h2>
           <p className="text-gray-600 mb-6">
-            Have a project in mind or want to say hello? Fill the form below and we’ll get back to you!
+            Have a project in mind or want to say hello? Fill the form below and we'll get back to you!
           </p>
 
           <form
@@ -72,7 +72,7 @@ export default function ContactForm() {
 
             {submitted && (
               <p className="text-green-600 text-sm mt-2">
-                ✅ Thank you! We’ll get back to you soon.
+                ✅ Thank you! We'll get back to you soon.
               </p>
             )}
           </form>
