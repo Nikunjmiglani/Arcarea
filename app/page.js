@@ -68,6 +68,18 @@ async function getBlogs() {
   const blogs = await client.fetch(query);
   return blogs;
 }
+const features = [
+  { label: "Easy EMIs", icon: "💳" },
+  { label: "45-day move-in guarantee", icon: "📅" },
+  { label: "146 quality checks", icon: "✅" },
+  { label: "1,00,000+ happy homes", icon: "🏠" },
+  { label: "60+ cities", icon: "🌆" },
+  { label: "3 countries", icon: "🌍" },
+  { label: "Personal design expert", icon: "👷‍♂️" },
+  { label: "24/7 support", icon: "📞" },
+  { label: "Budget-friendly plans", icon: "💰" },
+  { label: "Eco-friendly options", icon: "♻️" },
+];
 
 export default async function HomePage() {
   await connectMongo();
@@ -75,18 +87,8 @@ export default async function HomePage() {
   const blogs = await getBlogs();
 
   return (
-    <section className="bg-gray-100 min-h-screen">
-      {/* Hero Section */}
-      <div className="relative w-full h-[95vh]">
-        <Image
-          src="/cropped-vastu-based renovation.png"
-          alt="Hero"
-          layout="fill"
-          objectFit="cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-black/40" />
-      </div>
+    <section className="bg-white min-h-screen">
+     
 
       <div className="max-w-7xl mx-auto px-6 py-20 text-center">
         <h1 className="text-4xl md:text-6xl font-bold font-mono mt-7 text-gray-900 mb-5">
@@ -124,49 +126,38 @@ export default async function HomePage() {
       </div>
 
       {/* Full-width Banner */}
-     <div className="w-full">
-  <img
-    src="/cropped-interior design marketplace.png" 
-    alt="Process Steps"
-    className="w-full object-cover h-70"
-  />
-</div>
+    
 
-      {/* About Us */}
-      <div className="py-10 px-6 mt-5 md:px-12 lg:px-24 bg-gray-100">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold font-mono text-gray-900 mb-6">What We Do</h2>
-          <p className="text-lg text-gray-700 mb-8">
-            At <span className="font-semibold text-black">ArcArea</span>, we&rsquo;re redefining how homeowners and businesses connect with trusted
-            <span className="font-medium text-black"> interior designers</span>,
-            <span className="font-medium text-black"> architects</span>, and
-            <span className="font-medium text-black"> space planning experts</span>. Our platform is India&rsquo;s first one-click destination to discover and hire top-rated professionals who can bring your dream spaces to life.
-          </p>
+<section className="bg-white mb-10">
+      <div className="text-center mb-8">
+        <h2 className="text-4xl font-bold font-mono mb-15 text-gray-800">Why Choose Us</h2>
+      </div>
 
-          <div className="grid md:grid-cols-2 gap-50 text-left text-gray-700">
-            <div>
-              <h3 className="text-xl font-semibold text-black mb-2">Why ArcArea?</h3>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>Curated & Verified Experts</li>
-                <li>Simplified End-to-End Process</li>
-                <li>Vastu-Aligned Design Options</li>
-                <li>Transparent Pricing</li>
-              </ul>
+      <div className="overflow-hidden relative">
+        <div className="flex space-x-6 animate-scroll px-6 w-max">
+          {features.map((feature, idx) => (
+            <div
+              key={idx}
+              className="min-w-[200px] bg-white rounded-xl p-6 shadow-md text-center flex flex-col items-center justify-center"
+            >
+              <div className="text-4xl mb-2">{feature.icon}</div>
+              <p className="text-sm font-medium text-gray-700">{feature.label}</p>
             </div>
-            <div>
-              <h3 className="text-xl font-semibold text-black mb-2">Our Mission</h3>
-              <p>
-                To bridge the gap between design aspirations and trusted professionals by offering
-                a reliable, tech-enabled platform that empowers both clients and creators.
-              </p>
-            </div>
-          </div>
+          ))}
 
-          <p className="mt-10 text-lg text-gray-700">
-            Whether you&rsquo;re a designer looking to grow or a homeowner seeking transformation — <span className="font-medium text-black">your journey starts here</span>.
-          </p>
+          {/* Duplicate for seamless looping */}
+          {features.map((feature, idx) => (
+            <div
+              key={idx + features.length}
+              className="min-w-[200px] bg-white rounded-xl p-6 shadow-md text-center flex flex-col items-center justify-center"
+            >
+              <div className="text-4xl mb-2">{feature.icon}</div>
+              <p className="text-sm font-medium text-gray-700">{feature.label}</p>
+            </div>
+          ))}
         </div>
       </div>
+    </section>
 
       {/* Highlights */}
       <div className="max-w-7xl mx-auto px-6 py-12">
