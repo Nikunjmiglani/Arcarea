@@ -76,9 +76,17 @@ export default async function HomePage() {
 
 
   return (
-    <section className="bg-gray-100 min-h-screen pt-16">
+    <section className="bg-gray-100 min-h-screen ">
       {/* Hero */}
-      <div className="max-w-7xl mx-auto px-6 py-20 text-center">
+      <div className="relative w-full h-[90vh]">
+  <img
+    src="/vastu-based renovation.png" 
+    alt="Hero"
+    className="w-full h-full object-cover"
+  />
+  <div className="absolute inset-0 bg-black/40" /> {/* Optional dark overlay */}
+</div>
+<div className="max-w-7xl mx-auto px-6 py-20 text-center">
         <h1 className="text-4xl md:text-6xl font-bold font-mono mt-7 text-gray-900 mb-5">
           Transform Your Space With Expert Designers
         </h1>
@@ -92,6 +100,7 @@ export default async function HomePage() {
           Explore Categories
         </Link>
       </div>
+
 
       {/* Categories */}
       <div className="max-w-7xl mx-auto px-6 py-12">
@@ -113,10 +122,53 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* Banner 1 */}
-      <div className="max-w-7xl mx-auto px-6 py-6">
-        <img src="/banner1.jpg" alt="Banner 1" className="rounded-lg w-full object-cover shadow" />
+     <div className="w-full">
+  <img
+    src="/interior design marketplace.png" 
+    alt="Process Steps"
+    className="w-full object-cover h-70"
+  />
+</div>
+
+<div className="py-20 px-6 mt-5 md:px-12 lg:px-24 bg-gray-100">
+      <div className="max-w-5xl mx-auto text-center">
+        <h2 className="text-4xl md:text-5xl font-bold font-mono text-gray-900 mb-6">What We Do</h2>
+        <p className="text-lg text-gray-700 mb-8">
+          At <span className="font-semibold text-black">ArcArea</span>, we’re redefining how homeowners and businesses connect with trusted 
+          <span className="font-medium text-black"> interior designers</span>, 
+          <span className="font-medium text-black"> architects</span>, and 
+          <span className="font-medium text-black"> space planning experts</span>. 
+          Our platform is India’s first one-click destination to discover and hire top-rated professionals who can bring your dream spaces to life.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-10 text-left text-gray-700">
+          <div>
+            <h3 className="text-xl font-semibold text-black mb-2">Why ArcArea?</h3>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>✅ Curated & Verified Experts</li>
+              <li>✅ Simplified End-to-End Process</li>
+              <li>✅ Vastu-Aligned Design Options</li>
+              <li>✅ Transparent Pricing</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-semibold text-black mb-2">Our Mission</h3>
+            <p>
+              To bridge the gap between design aspirations and trusted professionals by offering 
+              a reliable, tech-enabled platform that empowers both clients and creators.
+            </p>
+          </div>
+        </div>
+
+        <p className="mt-10 text-lg text-gray-700">
+          Whether you're a designer looking to grow or a homeowner seeking transformation — <span className="font-medium text-black">your journey starts here</span>.
+        </p>
       </div>
+    </div>
+
+
+
 
       {/* Highlights / Popular Services */}
       <div className="max-w-7xl mx-auto px-6 py-12">

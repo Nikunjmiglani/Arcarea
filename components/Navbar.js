@@ -9,11 +9,12 @@ export default function Navbar() {
   const { data: session, status } = useSession();
 
   return (
-    <nav className="flex items-center justify-between px-6 py-4 shadow-sm bg-white sticky top-0 z-50">
+    <nav className="flex items-center justify-between px-5 py-1 shadow-sm bg-white ">
       <div className="flex items-center gap-6">
         <Link href="/" className="flex items-center text-xl font-semibold">
-          <span className="bg-black text-white px-2 py-1 rounded mr-2 font-mono hover:scale-110 transition-transform duration-200">AA</span>
-          <span className="text-gray-800 font-medium">ArchArea</span>
+         <span>
+          <img src="/ArcArea-logo.png" className="w-17 mt-1"  alt="" />
+         </span>
         </Link>
 
         <div className="hidden md:flex items-center gap-8 ml-6 text-gray-700 text-sm font-medium">
