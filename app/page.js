@@ -5,10 +5,14 @@ import kitchenImg from "../public/mainpageimg1.jpg";
 import factoryImg from '@/public/mainpageimg1.jpg'
 import Link from "next/link";
 import { FaSearch } from "react-icons/fa";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import connectMongo from "@/lib/mongoose";
 import User from "@/models/User";
 import { client } from '@/lib/sanity';
+
+import { IoIosArrowDown } from "react-icons/io";
 import TestimonialsCarousel from '@/components/TestimonialsCarousel';
+import Hero from "@/components/Hero";
 
 const timeline = [
     {
@@ -59,32 +63,32 @@ const categories = [
 const highlights = [
   {
     title: "1BHK Interior Design",
-    image: "/1bhk.jpg",
+    image: "/servicesimg1.jpeg",
     subcategory: "1BHK Interior Design",
   },
   {
     title: "Office Design",
-    image: "/office.jpg",
+    image: "/servicesimg5.jpeg",
     subcategory: "Office Design",
   },
   {
     title: "Wall Panel Design",
-    image: "/wall.jpg",
+    image: "/servicesimg3.jpeg",
     subcategory: "Wall Panel Design",
   },
   {
     title: "Full House Construction",
-    image: "/construction.jpg",
+    image: "/servicesimg2.jpeg",
     subcategory: "Full House Construction",
   },
   {
     title: "Modular Kitchen Setup",
-    image: "/kitchen.jpg",
+    image: "/servicesimg4.jpeg",
     subcategory: "Modular Kitchen",
   },
   {
     title: "Bespoke Furniture",
-    image: "/custom.jpg",
+    image: "/servicesimg1.jpeg",
     subcategory: "Bespoke Furniture",
   },
 
@@ -120,43 +124,19 @@ export default async function HomePage() {
   const blogs = await getBlogs();
 
   return (
+    
     <section className="bg-white min-h-screen">
+      <div className=" mx-4 sm:mx-20 mt-3"></div>
      
 
-      <div className="max-w-7xl mx-auto flex flex-col px-6 py-20 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold font-mono mt-7 text-gray-900 mb-5">
-          Transform Your Space With Expert Designers
-        </h1>
-        <p className="text-lg md:text-xl mt-5 text-gray-600 mb-8">
-          Connect with top Interior Designers, Architects & Furniture Experts near you.
-        </p>
+    
 
-        <div className="flex justify-center items-center">
 
-        
+  
 
-         <div className="flex-1 max-w-2xs mx-6 hidden lg:flex gap-4">
-        <div className="flex items-center border rounded-2xl px-3 py-2 w-full text-sm text-gray-700">
-          <FaSearch className="text-gray-500 mr-2" />
-          <input
-            type="text"
-            placeholder="Search services..."
-            className="outline-none flex-1 bg-transparent"
-          />
-        </div>
-      </div>
-       <div className="flex-1 max-w-2xs mx-6 hidden lg:flex gap-4">
-        <div className="flex items-center border rounded-2xl px-3 py-2 w-full text-sm text-gray-700">
-          <FaSearch className="text-gray-500 mr-2" />
-          <input
-            type="text"
-            placeholder="Search services..."
-            className="outline-none flex-1 bg-transparent"
-          />
-        </div>
-      </div>
-      </div>
-      </div>
+   <Hero />
+
+  
 
       {/* Categories */}
       <div className="max-w-7xl mx-auto px-6 mb-20">
