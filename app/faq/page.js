@@ -168,7 +168,7 @@ const faqs = [
   },
 ];
 
-export default function page() {
+export default function Page() {
   const [activeIndex, setActiveIndex] = useState(null);
 
   return (

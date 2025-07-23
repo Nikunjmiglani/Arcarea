@@ -19,7 +19,7 @@ export default function page() {
           At <strong>ArcArea</strong>, we’re committed to transforming how India designs, decorates, and builds vastu-aligned spaces.
         </p>
         <p>
-          Whether you're a homeowner seeking interior consultation, an architect exploring collaboration, or a vendor ready to grow — we’re just one message away.
+          Whether you&apos;re a homeowner seeking interior consultation, an architect exploring collaboration, or a vendor ready to grow — we’re just one message away.
         </p>
         <p className="italic font-medium">
           Every great project begins with a great conversation.
@@ -36,7 +36,8 @@ export default function page() {
 
           <div className="mt-4 space-y-2">
             <p className="font-medium">🏠 Office Address</p>
-            <p>ArcArea | Powered by Miggla Industries Pvt. Ltd.<br />
+            <p>
+              ArcArea | Powered by Miggla Industries Pvt. Ltd.<br />
               (Physical office address can be added here)<br />
               Serving PAN India – Delhi, Mumbai, Bangalore, Ahmedabad, Jaipur, Hyderabad & 60+ Cities
             </p>
@@ -49,12 +50,17 @@ export default function page() {
 
           <div className="space-y-1">
             <p className="font-medium mt-4">📧 Email Support</p>
-            <p><a href="mailto:support@arcarea.in" className="text-blue-600 underline">support@arcarea.in</a><br />For listing, collaboration, or client service queries</p>
+            <p>
+              <a href="mailto:support@arcarea.in" className="text-blue-600 underline">support@arcarea.in</a><br />
+              For listing, collaboration, or client service queries
+            </p>
           </div>
 
           <div className="space-y-1">
             <p className="font-medium mt-4">🌐 Website</p>
-            <p><a href="https://www.arcarea.in" className="text-blue-600 underline">www.arcarea.in</a></p>
+            <p>
+              <a href="https://www.arcarea.in" className="text-blue-600 underline">www.arcarea.in</a>
+            </p>
           </div>
         </div>
 
