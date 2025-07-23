@@ -4,12 +4,13 @@ export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-300 bottom-0 ">
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
-        
+
         {/* Logo and Description */}
         <div>
           <h2 className="text-2xl font-bold text-white mb-3">ArcArea</h2>
           <p className="text-sm text-gray-400">
-            Connecting you with the best interior designers, architects, and furniture creators near you.
+            ArcArea is India’s first vastu-aligned marketplace connecting verified interior designers, architects, modular kitchen experts, and custom furniture makers across 60+ cities.
+            We simplify home and office design with trusted professionals, vastu-based planning, and affordable project solutions — all under one roof.
           </p>
         </div>
 

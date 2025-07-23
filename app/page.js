@@ -16,32 +16,32 @@ import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import Hero from "@/components/Hero";
 
 const timeline = [
-    {
-      title: "Talk to our Interior Designer",
-      subtitle: "Get an Estimate",
-      icon: "https://dlifeinteriors.com/wp-content/uploads/2023/06/meeting.svg", 
-    },
-    {
-      title: "Detailed Drawing",
-      subtitle: "and Approval",
-      icon: "https://dlifeinteriors.com/wp-content/uploads/2023/06/approved.svg",
-    },
-    {
-      title: "Production at Own",
-      subtitle: "Factories",
-      icon: "https://dlifeinteriors.com/wp-content/uploads/2023/06/production.svg",
-    },
-    {
-      title: "Material Delivery",
-      subtitle: "& Execution",
-      icon: "https://dlifeinteriors.com/wp-content/uploads/2023/06/truck.svg",
-    },
-    {
-      title: "On Time Project",
-      subtitle: "Hand Over",
-      icon: "https://dlifeinteriors.com/wp-content/uploads/2023/06/deal.svg",
-    },
-  ];
+  {
+    title: "Consultation & Site Visit",
+    subtitle: "",
+    icon: "https://dlifeinteriors.com/wp-content/uploads/2023/06/meeting.svg",
+  },
+  {
+    title: "Design Finalization",
+    subtitle: "",
+    icon: "https://dlifeinteriors.com/wp-content/uploads/2023/06/approved.svg",
+  },
+  {
+    title: "Material Procurement & Production",
+    subtitle: "",
+    icon: "https://dlifeinteriors.com/wp-content/uploads/2023/06/production.svg",
+  },
+  {
+    title: "On-Site Execution Begins",
+    subtitle: "",
+    icon: "https://dlifeinteriors.com/wp-content/uploads/2023/06/truck.svg",
+  },
+  {
+    title: "Final Handover & Quality Check",
+    subtitle: "",
+    icon: "https://dlifeinteriors.com/wp-content/uploads/2023/06/deal.svg",
+  },
+];
 
 const categories = [
   {
@@ -107,16 +107,16 @@ async function getBlogs() {
   return blogs;
 }
 const features = [
-  { label: "Easy EMIs", icon: "💳" },
-  { label: "45-day move-in guarantee", icon: "📅" },
-  { label: "146 quality checks", icon: "✅" },
-  { label: "1,00,000+ happy homes", icon: "🏠" },
-  { label: "60+ cities", icon: "🌆" },
-  { label: "3 countries", icon: "🌍" },
-  { label: "Personal design expert", icon: "👷‍♂️" },
-  { label: "24/7 support", icon: "📞" },
+  { label: "Vastu-Driven Planning", icon: "🧭" },
+  { label: " Across Cities, Beyond Borders", icon: "📍 " },
+  { label: "Verified Professionals Only", icon: "🤝 " },
+  { label: "One Point of Contact, Total Control", icon: "🎯 " },
+  { label: " Zero Commission, 100% Value", icon: "💸 " },
+  { label: "Modular to Custom — All Under One Roof", icon: "📐 " },
+  { label: " Clutter-Free Experience", icon: "🕊" },
+  { label: "Faster Turnarounds, Assured Delivery", icon: "📆 " },
   { label: "Budget-friendly plans", icon: "💰" },
-  { label: "Eco-friendly options", icon: "♻️" },
+  { label: "Smart, Sustainable, Spiritual", icon: "💡 " },
 ];
 
 export default async function HomePage() {
@@ -125,11 +125,11 @@ export default async function HomePage() {
   const blogs = await getBlogs();
 
   return (
-    
+
     <section className="bg-white min-h-screen">
       <div className=" mx-4 sm:mx-20 mt-3"></div>
-     <Hero />
- {/* Categories */}
+      <Hero />
+      {/* Categories */}
       <div className="max-w-7xl mx-auto px-6 mb-20">
         <h2 className="text-2xl font-semibold mb-6 text-gray-800">Choose Service</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -150,140 +150,150 @@ export default async function HomePage() {
       </div>
 
       {/* Full-width Banner */}
-    
 
-<section className="bg-white mb-10">
-      <div className="text-center mb-8">
-        <h2 className="text-4xl font-bold font-mono mb-15 text-gray-800">Why Choose Us</h2>
-      </div>
 
-      <div className="overflow-hidden relative">
-        <div className="flex space-x-6 animate-scroll px-6 w-max">
-          {features.map((feature, idx) => (
-            <div
-              key={idx}
-              className="min-w-[200px] bg-white rounded-xl p-6 shadow-md text-center flex flex-col items-center justify-center"
-            >
-              <div className="text-4xl mb-2">{feature.icon}</div>
-              <p className="text-sm font-medium text-gray-700">{feature.label}</p>
-            </div>
-          ))}
-
-          {/* Duplicate for seamless looping */}
-          {features.map((feature, idx) => (
-            <div
-              key={idx + features.length}
-              className="min-w-[200px] bg-white rounded-xl p-6 shadow-md text-center flex flex-col items-center justify-center"
-            >
-              <div className="text-4xl mb-2">{feature.icon}</div>
-              <p className="text-sm font-medium text-gray-700">{feature.label}</p>
-            </div>
-          ))}
+      <section className="bg-white mb-10">
+        <div className="text-center mb-8">
+          <h2 className="text-4xl font-bold font-mono mb-15 text-gray-800">Why Choose Us</h2>
         </div>
-      </div>
-    </section>
 
-    <div className="bg-white py-16 px-4 sm:px-8">
-      {/* Heading */}
-      <h2 className="text-center text-3xl sm:text-4xl font-bold mb-12">
-        PROJECT COMPLETION IN{" "}
-        <span className="text-purple-600">40 WORKING DAYS*</span>
-      </h2>
-
-      {/* Timeline */}
-      <div className="flex flex-col sm:flex-row justify-between items-center gap-12 sm:gap-0 max-w-7xl mx-auto">
-        {timeline.map((step, index) => (
-          <div key={index} className="flex flex-col items-center relative w-full sm:w-auto">
-            {/* Icon in Circle */}
-            <div className="w-28 h-28 border-2 border-gray-300 rounded-full flex items-center justify-center mb-4">
-              <img src={step.icon} alt={step.title} className="w-12 h-12 object-fill" />
-            </div>
-
-            {/* Step Description */}
-            <div className="text-center text-sm sm:text-base font-medium text-gray-800">
-              {step.title}
-              <br />
-              {step.subtitle}
-            </div>
-
-            {/* Arrow */}
-            {index !== timeline.length - 1 && (
-              <div className="hidden sm:block absolute top-14 right-[-48px]">
-                <svg width="48" height="2" viewBox="0 0 48 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <line x1="0" y1="1" x2="48" y2="1" stroke="#000" strokeWidth="2" />
-                  <polygon points="48,0 48,2 52,1" fill="#000" />
-                </svg>
+        <div className="overflow-hidden relative">
+          <div className="flex space-x-6 animate-scroll px-6 w-max">
+            {features.map((feature, idx) => (
+              <div
+                key={idx}
+                className="min-w-[200px] bg-white rounded-xl p-6 shadow-md text-center flex flex-col items-center justify-center"
+              >
+                <div className="text-4xl mb-2">{feature.icon}</div>
+                <p className="text-sm font-medium text-gray-700">{feature.label}</p>
               </div>
-            )}
+            ))}
+
+            {/* Duplicate for seamless looping */}
+            {features.map((feature, idx) => (
+              <div
+                key={idx + features.length}
+                className="min-w-[200px] bg-white rounded-xl p-6 shadow-md text-center flex flex-col items-center justify-center"
+              >
+                <div className="text-4xl mb-2">{feature.icon}</div>
+                <p className="text-sm font-medium text-gray-700">{feature.label}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
-
-    <div className="min-h-screen bg-white px-6 py-12 md:py-20">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        
-        {/* TEXT SECTION */}
-        <div>
-          <h1 className="text-3xl md:text-4xl font-serif text-gray-900 mb-6 leading-tight">
-            Contemporary Home Interior Designers and Contractors in India
-          </h1>
-          <p className="text-gray-700 mb-3 text-lg leading-relaxed">
-            D’LIFE is the largest home interior designers in India with experience centres in Navi Mumbai, Hyderabad, Bangalore, Mysore, Kerala, Pune, Mumbai, Chennai, Nagercoil, Madurai, Coimbatore & Mangalore with more than 20 years of experience, 28 showrooms, modern factories, and a team of 1400 employees.
-           
-            We are professional, contemporary interior designers and contractors with capacity to hand over 300 projects every month. We ensure client satisfaction through quality products and systematic working.
-            
-            As the most renowned contemporary interior designers, we design and build beautiful living space within an apartment, group villa or independent villa, using our vast experience and creativity that will delight you, your family and visitors.
-            
-            Customize modular kitchen, bedroom, living and dining room furniture as per requirement and measurement of exact space with the help of the best interior design company.
-          </p>
         </div>
+      </section>
 
-        {/* IMAGE SECTION */}
-        <div className="w-full h-full">
-          <Image 
-            src={kitchenImg}
-            alt="Modern Kitchen Interior"
-            className="rounded-lg shadow-lg"
-            placeholder="blur"
-            priority
-          />
-        </div>
+      <div className="bg-white py-16 px-4 sm:px-8">
+        {/* Heading */}
+        <h2 className="text-center text-3xl sm:text-4xl font-bold mb-12">
+          PROJECT COMPLETION IN{" "}
+          <span className="text-purple-600">40 WORKING DAYS*</span>
+        </h2>
 
-      </div>
+        {/* Timeline */}
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-12 sm:gap-0 max-w-7xl mx-auto">
+          {timeline.map((step, index) => (
+            <div key={index} className="flex flex-col items-center relative w-full sm:w-auto">
+              {/* Icon in Circle */}
+              <div className="w-28 h-28 border-2 border-gray-300 rounded-full flex items-center justify-center mb-4">
+                <img src={step.icon} alt={step.title} className="w-12 h-12 object-fill" />
+              </div>
 
-     {/* SECTION 2: Image Left, Text Right */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        {/* IMAGE */}
-        <div className="w-full h-full order-1 md:order-none">
-          <Image 
-            src={factoryImg}
-            alt="Factory Production Interior"
-            className="rounded-lg shadow-lg"
-            placeholder="blur"
-            priority
-          />
-        </div>
+              {/* Step Description */}
+              <div className="text-center text-sm sm:text-base font-medium text-gray-800">
+                {step.title}
+                <br />
+                {step.subtitle}
+              </div>
 
-        {/* TEXT */}
-        <div>
-          <h2 className="text-3xl md:text-4xl font-serif text-gray-900 mb-6 leading-tight">
-            Precision Production at Our Modern Factories
-          </h2>
-          <p className="text-gray-700 text-lg leading-relaxed">
-            Our in-house manufacturing units are equipped with cutting-edge machinery to ensure consistent quality and timely delivery. Every component of your interior—from kitchen cabinets to wardrobes—is crafted using premium-grade materials with attention to detail.
-            <br /><br />
-            Having our own factories ensures better quality control, quicker delivery timelines, and the flexibility to customize designs to your exact needs.
-            <br /><br />
-            With a systematic workflow and experienced professionals, our factory output meets the highest benchmarks of safety and craftsmanship.
-          </p>
+              {/* Arrow */}
+              {index !== timeline.length - 1 && (
+                <div className="hidden sm:block absolute top-14 right-[-48px]">
+                  <svg width="48" height="2" viewBox="0 0 48 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="0" y1="1" x2="48" y2="1" stroke="#000" strokeWidth="2" />
+                    <polygon points="48,0 48,2 52,1" fill="#000" />
+                  </svg>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
 
-    </div>
+      <div className="min-h-screen bg-white px-6 py-12 md:py-20">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
-    <TestimonialsCarousel />
-    
+          {/* TEXT SECTION */}
+          <div>
+            <h1 className="text-3xl md:text-4xl font-serif text-gray-900 mb-6 leading-tight">
+              🏡 Who is ArcArea ?
+
+            </h1>
+            <p className="text-gray-700 mb-3 text-lg leading-relaxed">
+              ArcArea is India’s first curated marketplace connecting homeowners with verified architects, interior designers, modular furniture manufacturers, and custom furniture experts — all under one vastu-aligned platform.
+
+              We don’t just list vendors. We build a community of professionals who believe in creating homes and spaces that are not only beautiful, but also balanced with energy, function, and purpose.
+
+              Whether you're building a new home, renovating a flat, decorating a small office, or designing a vastu-compliant villa — ArcArea simplifies the entire process by offering pre-screened, experienced experts ready to deliver.
+
+            </p>
+          </div>
+
+          {/* IMAGE SECTION */}
+          <div className="w-full h-full">
+            <Image
+              src={kitchenImg}
+              alt="Modern Kitchen Interior"
+              className="rounded-lg shadow-lg"
+              placeholder="blur"
+              priority
+            />
+          </div>
+
+        </div>
+
+        {/* SECTION 2: Image Left, Text Right */}
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          {/* IMAGE */}
+          <div className="w-full h-full order-1 md:order-none">
+            <Image
+              src={factoryImg}
+              alt="Factory Production Interior"
+              className="rounded-lg shadow-lg"
+              placeholder="blur"
+              priority
+            />
+          </div>
+
+          {/* TEXT */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif text-gray-900 mb-6 leading-tight">
+              🛠 How It Works:
+
+            </h2>
+            <p className="text-gray-700 text-lg leading-relaxed">
+              Discover Trusted Experts
+              Search by category, location, or need — find top-rated professionals in interior design, modular furniture, architecture, and more.
+
+              View Verified Portfolios
+              Browse stunning work samples, design styles, and real reviews to choose the expert that fits your vision.
+
+              Unlock Contact (When You're Ready)
+              Pay a small appointment fee to instantly connect with the vendor. No spam. No fake leads. Only serious conversations.
+
+              Get Value, Not Just Quotes
+              Our experts offer design insights, vastu integration, and transparent pricing — so you get more than just cost estimates.
+
+              ✅ ArcArea is where design meets trust.
+              It’s not just a marketplace — it’s a movement to bring harmony, creativity, and consciousness into every Indian home.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <TestimonialsCarousel />
+
 
       {/* Highlights */}
       <div className="max-w-7xl mx-auto px-6 py-12">
@@ -304,9 +314,9 @@ export default async function HomePage() {
         </div>
       </div>
 
-<ContactForm/>
+      <ContactForm />
 
-      
+
 
       {/* Vendors */}
       <div className="max-w-7xl mx-auto px-6 py-12">
@@ -333,44 +343,44 @@ export default async function HomePage() {
         </div>
       </div>
 
-       <div className="w-full">
-      <img
-        src="/bannerimg.jpg"
-        alt="Banner"
-        className="w-full h-auto object-cover"
-      />
-    </div>
+      <div className="w-full">
+        <img
+          src="/bannerimg.jpg"
+          alt="Banner"
+          className="w-full h-auto object-cover"
+        />
+      </div>
 
       {/* Blogs */}
       <div className="max-w-7xl mx-auto px-6 py-12">
         <h2 className="text-2xl font-semibold mb-6 text-gray-800">Latest Blogs</h2>
         <div className="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide">
           {blogs.map((blog, index) => (
-  <Link
-    key={index}
-    href={`/blog/${blog.slug}`}
-    className="min-w-[300px] bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden"
-  >
-    {blog.image ? (
-      <Image
-        src={blog.image}
-        alt={blog.title}
-        width={400}
-        height={160}
-        className="w-full object-cover h-40"
-      />
-    ) : (
-      <div className="h-40 bg-gray-200 flex items-center justify-center text-gray-500">
-        No Image
-      </div>
-    )}
-    <div className="p-4">
-      <h3 className="text-lg font-semibold text-gray-800">
-        {blog.title}
-      </h3>
-    </div>
-  </Link>
-))}
+            <Link
+              key={index}
+              href={`/blog/${blog.slug}`}
+              className="min-w-[300px] bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden"
+            >
+              {blog.image ? (
+                <Image
+                  src={blog.image}
+                  alt={blog.title}
+                  width={400}
+                  height={160}
+                  className="w-full object-cover h-40"
+                />
+              ) : (
+                <div className="h-40 bg-gray-200 flex items-center justify-center text-gray-500">
+                  No Image
+                </div>
+              )}
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-gray-800">
+                  {blog.title}
+                </h3>
+              </div>
+            </Link>
+          ))}
 
         </div>
       </div>

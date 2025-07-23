@@ -15,12 +15,20 @@ export default function AdminPage() {
 
   const [vendors, setVendors] = useState([]);
   const [addNewVendor, setAddNewVendor] = useState(false);
-  const [newVendorData, setNewVendorData] = useState({ name: "", email: "" });
+  const [newVendorData, setNewVendorData] = useState({
+    name: "",
+    email: "",
+    profileImage: "",
+    location: "",
+    bio: "",
+    skills: "",
+    portfolioImages: "",
+  });
 
   const subcategoriesMap = {
-    Interior: ["Residential Interior", "Commercial Interior","1BHK Interior Design","Office Design","Wall Panel Design","Modular Kitchen"],
+    Interior: ["Residential Interior", "Commercial Interior", "1BHK Interior Design", "Office Design", "Wall Panel Design", "Modular Kitchen"],
     Architecture: ["Residential Architecture", "Landscape Architecture"],
-    Furniture: ["Custom Furniture", "Modular Furniture", "bespoke furniture"],
+    Furniture: ["Custom Furniture", "Modular Furniture", "Bespoke Furniture"],
   };
 
   useEffect(() => {
@@ -44,17 +52,24 @@ export default function AdminPage() {
     }
   };
 
+  const handleNewVendorChange = (e) => {
+    const { name, value } = e.target;
+    setNewVendorData((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     let vendorId = formData.vendor;
 
-    // Create new vendor if needed
     if (addNewVendor && newVendorData.name && newVendorData.email) {
       const res = await fetch("/api/vendors", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newVendorData),
+        body: JSON.stringify({
+          ...newVendorData,
+          skills: newVendorData.skills.split(",").map((s) => s.trim()),
+          portfolio: newVendorData.portfolioImages.split(",").map((url) => ({ image: url.trim() })),
+        }),
       });
       const data = await res.json();
       vendorId = data._id;
@@ -77,7 +92,15 @@ export default function AdminPage() {
         image: "",
         vendor: "",
       });
-      setNewVendorData({ name: "", email: "" });
+      setNewVendorData({
+        name: "",
+        email: "",
+        profileImage: "",
+        location: "",
+        bio: "",
+        skills: "",
+        portfolioImages: "",
+      });
       setAddNewVendor(false);
     } else {
       alert("Error creating service");
@@ -85,7 +108,7 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6">
+    <div className="max-w-2xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Add a New Service</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} className="w-full border p-2 rounded" required />
@@ -115,9 +138,14 @@ export default function AdminPage() {
         </select>
 
         {addNewVendor && (
-          <div className="space-y-2">
-            <input type="text" placeholder="Vendor Name" value={newVendorData.name} onChange={(e) => setNewVendorData({ ...newVendorData, name: e.target.value })} className="w-full border p-2 rounded" />
-            <input type="email" placeholder="Vendor Email" value={newVendorData.email} onChange={(e) => setNewVendorData({ ...newVendorData, email: e.target.value })} className="w-full border p-2 rounded" />
+          <div className="space-y-2 bg-gray-50 p-4 rounded border mt-2">
+            <input type="text" name="name" placeholder="Vendor Name" value={newVendorData.name} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <input type="email" name="email" placeholder="Vendor Email" value={newVendorData.email} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <input type="text" name="profileImage" placeholder="Vendor Profile Image URL" value={newVendorData.profileImage} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <input type="text" name="location" placeholder="Vendor Location" value={newVendorData.location} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <textarea name="bio" placeholder="Vendor Bio" value={newVendorData.bio} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <input type="text" name="skills" placeholder="Vendor Skills (comma separated)" value={newVendorData.skills} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <input type="text" name="portfolioImages" placeholder="Portfolio Image URLs (comma separated)" value={newVendorData.portfolioImages} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
           </div>
         )}
 

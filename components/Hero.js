@@ -105,7 +105,7 @@ export default function Hero() {
   <FaSearch className="text-gray-500 mr-2" />
   <input
     type="text"
-    placeholder="Search services..."
+    placeholder="Find My Expert Now..."
     className="outline-none flex-1 bg-transparent"
   />
 </div>
