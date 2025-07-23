@@ -80,10 +80,11 @@ export default function Hero() {
   return (
     <div className="max-w-7xl mx-auto flex flex-col px-6 py-20 text-center">
       <h1 className="text-4xl md:text-6xl font-bold font-mono mt-7 text-gray-900 mb-5">
-        Transform Your Space With Expert Designers
+      Transform Your Space with Expert Interior Designers
+
       </h1>
       <p className="text-lg md:text-xl mt-5 text-gray-600 mb-8">
-        Connect with top Interior Designers, Architects & Furniture Experts near you.
+       Connect with Verified Architects, Modular Kitchen Specialists & Custom Furniture Experts Near You.
       </p>
 
       <div className="flex justify-center items-center flex-wrap gap-4">
