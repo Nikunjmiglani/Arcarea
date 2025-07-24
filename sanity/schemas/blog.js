@@ -1,3 +1,4 @@
+// schemas/blog.js
 export default {
   name: 'blog',
   title: 'Blog',
@@ -31,16 +32,16 @@ export default {
       to: [{ type: 'author' }],
     },
     {
-      name: 'mainImage',
-      title: 'Main Image',
+      name: 'image',
+      title: 'Image',
       type: 'image',
       options: {
         hotspot: true,
       },
     },
     {
-      name: 'body',
-      title: 'Body',
+      name: 'content', 
+      title: 'Content',
       type: 'array',
       of: [{ type: 'block' }],
     },

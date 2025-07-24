@@ -1,9 +1,12 @@
 import { client } from '@/lib/sanity'
 import { PortableText } from '@portabletext/react'
 
-export async function generateStaticParams() {
-  const slugs = await client.fetch(`*[_type == "blog" && defined(slug.current)]{ "slug": slug.current }`)
-  return slugs.map(post => ({ slug: post.slug }))
+export async function generateMetadata({ params }) {
+  const post = await client.fetch(
+    `*[_type == "blog" && slug.current == $slug][0]{ title }`,
+    { slug: params.slug }
+  )
+  return { title: post?.title || 'Blog' }
 }
 
 export default async function BlogDetail({ params }) {
@@ -11,25 +14,24 @@ export default async function BlogDetail({ params }) {
     `*[_type == "blog" && slug.current == $slug][0]{
       title,
       publishedAt,
-      mainImage { asset->{url} },
-      body,
+      content,
       "author": author->name
     }`,
     { slug: params.slug }
   )
 
-  if (!post) return <div>Blog not found</div>
+  if (!post) return <div className="p-6 text-red-600">Blog not found</div>
 
   return (
-    <article className="prose lg:prose-xl p-4">
-      <h1>{post.title}</h1>
-      <p className="text-sm text-gray-500">
-        By {post.author} on {new Date(post.publishedAt).toDateString()}
+    <div className="max-w-4xl mx-auto px-6 py-12">
+      <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+      <p className="text-sm text-gray-500 mb-6">
+        By {post.author || 'Unknown'} on {new Date(post.publishedAt).toDateString()}
       </p>
-      {post.mainImage && (
-        <img src={post.mainImage.asset.url} alt={post.title} />
-      )}
-      <PortableText value={post.body} />
-    </article>
+
+      <div className="prose prose-lg max-w-none">
+        <PortableText value={post.content} />
+      </div>
+    </div>
   )
 }
