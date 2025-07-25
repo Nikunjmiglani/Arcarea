@@ -8,7 +8,7 @@ export default function Navbar() {
   const { data: session, status } = useSession();
 
   return (
-    <nav className="flex items-center justify-between px-6 py-3 shadow-sm bg-white">
+    <nav className="flex items-center justify-between px-2 py-0 shadow-sm bg-white">
       {/* Left Side Logo + Links */}
       <div className="flex items-center gap-6">
         <Link href="/" className="flex items-center text-xl font-semibold">

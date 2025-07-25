@@ -17,12 +17,12 @@ const testimonials = [
   {
     name: 'Mr. Suresh Chandran',
     image: '/testimonials/suresh.jpg',
-    message: 'Working with DLIFE was such a wonderful...',
+    message: 'Working with Arcarea was such a wonderful...',
   },
   {
     name: 'Mr. Johnson Daniel',
     image: '/testimonials/johnson.jpg',
-    message: 'Dear DLIFE team, we are well pleased...',
+    message: 'Dear Arcarea team, we are well pleased...',
   },
   {
     name: 'Mr. Surendra N M & Family',

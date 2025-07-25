@@ -1,4 +1,3 @@
-//models/user.js
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
@@ -11,7 +10,7 @@ const UserSchema = new mongoose.Schema({
   phone: String,
   bio: String,
   skills: [String],
+  portfolioImages: [String],
 }, { timestamps: true });
 
-// This line prevents model overwrite errors on hot reload
 export default mongoose.models.User || mongoose.model("User", UserSchema);

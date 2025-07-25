@@ -68,7 +68,8 @@ export default function AdminPage() {
         body: JSON.stringify({
           ...newVendorData,
           skills: newVendorData.skills.split(",").map((s) => s.trim()),
-          portfolio: newVendorData.portfolioImages.split(",").map((url) => ({ image: url.trim() })),
+          portfolioImages: newVendorData.portfolioImages.split(",").map((url) => url.trim()),
+
         }),
       });
       const data = await res.json();

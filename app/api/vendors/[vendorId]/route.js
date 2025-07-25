@@ -1,6 +1,7 @@
 import connectMongo from "@/lib/mongoose";
 import User from "@/models/User";
 import Service from "@/models/Service";
+import Review from "@/models/Review"; // (create this if not yet)
 
 export async function GET(request, { params }) {
   const { vendorId } = params;
@@ -13,10 +14,11 @@ export async function GET(request, { params }) {
       return new Response(JSON.stringify({ error: "Vendor not found" }), { status: 404 });
     }
 
-    const services = await Service.find({ vendorId }).lean();
+    const services = await Service.find({ vendor: vendorId }).lean();
+    const reviews = await Review.find({ vendor: vendorId }).lean(); // optional
 
     return new Response(
-      JSON.stringify({ vendor, services }),
+      JSON.stringify({ vendor, services, reviews }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
