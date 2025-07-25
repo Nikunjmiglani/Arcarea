@@ -23,7 +23,7 @@ const homeProcess = [
       },
       {
         heading: 'Get Matched with Professionals',
-        desc: 'We’ll connect you with verified interior designers, contractors, or furniture makers best suited to your project.',
+        desc: 'We&rsquo;ll connect you with verified interior designers, contractors, or furniture makers best suited to your project.',
       },
     ],
     img: '/processimg1.avif',
@@ -91,7 +91,7 @@ const homeProcess = [
     points: [
       {
         heading: 'Your Home is Ready!',
-        desc: 'Enjoy your dream space — a true reflection of your lifestyle and taste.',
+        desc: 'Enjoy your dream space &mdash; a true reflection of your lifestyle and taste.',
       },
       {
         heading: 'Celebrate the Completion',
@@ -110,7 +110,7 @@ const Page = () => {
     const form = e.target;
     const formData = new FormData(form);
 
-    const res = await fetch('https://formspree.io/f/your_form_id', {
+    const res = await fetch('https://formspree.io/f/mgvynjpo', {
       method: 'POST',
       body: formData,
       headers: {
@@ -147,7 +147,7 @@ const Page = () => {
           <span className="text-red-500">5 steps!</span>
         </h2>
         <p className="text-lg mt-4 text-gray-600 max-w-2xl mx-auto">
-          Looking to design your home interiors? Here's how you can get started.
+          Looking to design your home interiors? Here&rsquo;s how you can get started.
         </p>
 
         <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 px-6 md:px-16">
@@ -219,16 +219,17 @@ const Page = () => {
               </div>
             </div>
 
+            {/* Conditional banners */}
             {index === 1 && (
               <div className="bg-[#5B4257] py-6 px-4 text-white flex items-center justify-center text-lg font-semibold gap-2 rounded-xl">
                 <CheckCircle className="text-white" size={24} />
-                Free consultation completed! Let’s lock your design.
+                Free consultation completed! Let&rsquo;s lock your design.
               </div>
             )}
             {index === 2 && (
               <div className="bg-[#5B4257] py-6 px-4 text-white flex items-center justify-center text-lg font-semibold gap-2 rounded-xl">
                 <CheckCircle className="text-white" size={24} />
-                You're halfway there. Your orders are raised!
+                You&rsquo;re halfway there. Your orders are raised!
               </div>
             )}
             {index === 4 && (
