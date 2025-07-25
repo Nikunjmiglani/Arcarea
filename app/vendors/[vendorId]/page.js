@@ -97,14 +97,39 @@ export default function VendorProfilePage() {
 
       {/* Booking Form */}
       <h2 className="text-xl font-semibold mb-2">Request a Booking</h2>
-      <form className="space-y-3 max-w-md">
-        <input type="text" placeholder="Your Name" className="w-full border p-2 rounded" />
-        <input type="email" placeholder="Your Email" className="w-full border p-2 rounded" />
-        <textarea placeholder="Message / Requirements" className="w-full border p-2 rounded" />
-        <button type="submit" className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
-          Send Request
-        </button>
-      </form>
+     <form
+  onSubmit={async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const res = await fetch('/api/book', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        message: form.message.value,
+        vendorId: vendor._id,
+      }),
+    });
+
+    if (res.ok) {
+      alert('Booking confirmed! Check your email.');
+      form.reset();
+    } else {
+      alert('Error sending booking request. Try again.');
+    }
+  }}
+>
+  <input name="name" required placeholder="Your Name" className="w-full border p-2 rounded" />
+  <input name="email" type="email" required placeholder="Your Email" className="w-full border p-2 rounded" />
+  <input name="phone" placeholder="Phone Number" className="w-full border p-2 rounded" />
+  <textarea name="message" required placeholder="Describe your requirements" className="w-full border p-2 rounded" />
+  <button type="submit" className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
+    Send Request
+  </button>
+</form>
+
     </div>
   );
 }
