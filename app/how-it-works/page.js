@@ -1,6 +1,7 @@
 'use client';
+
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import { CheckCircle } from 'lucide-react';
 
 const stepsList = [
@@ -102,6 +103,30 @@ const homeProcess = [
 ];
 
 const Page = () => {
+  const [showForm, setShowForm] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+
+    const res = await fetch('https://formspree.io/f/your_form_id', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+
+    if (res.ok) {
+      alert('Thank you! We will contact you shortly.');
+      setShowForm(false);
+      form.reset();
+    } else {
+      alert('There was an error. Please try again.');
+    }
+  };
+
   return (
     <main className="bg-white text-gray-800">
       {/* Top Banner */}
@@ -122,7 +147,7 @@ const Page = () => {
           <span className="text-red-500">5 steps!</span>
         </h2>
         <p className="text-lg mt-4 text-gray-600 max-w-2xl mx-auto">
-          Looking to design your home interiors? Here&apos;s how you can get started.
+          Looking to design your home interiors? Here's how you can get started.
         </p>
 
         <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 px-6 md:px-16">
@@ -142,7 +167,10 @@ const Page = () => {
           ))}
         </div>
 
-        <button className="mt-12 bg-red-500 hover:bg-red-600 text-white font-semibold px-8 py-4 rounded-full text-lg transition duration-300">
+        <button
+          onClick={() => setShowForm(true)}
+          className="mt-12 bg-red-500 hover:bg-red-600 text-white font-semibold px-8 py-4 rounded-full text-lg transition duration-300"
+        >
           START YOUR PROJECT NOW
         </button>
       </section>
@@ -151,7 +179,6 @@ const Page = () => {
       <section className="bg-white py-16 px-4 sm:px-8 space-y-24 max-w-7xl mx-auto">
         {homeProcess.map((item, index) => (
           <React.Fragment key={index}>
-            {/* Step */}
             <div className="flex flex-col md:flex-row items-center justify-between gap-10">
               <div className="md:w-1/2 space-y-4">
                 <h3 className="text-2xl font-bold">{item.title}</h3>
@@ -168,7 +195,10 @@ const Page = () => {
                       </h4>
                       <p className="text-gray-600 mt-1">{point.desc}</p>
                       {point.cta && (
-                        <button className="mt-2 px-4 py-1 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-full">
+                        <button
+                          onClick={() => setShowForm(true)}
+                          className="mt-2 px-4 py-1 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-full"
+                        >
                           {point.cta}
                         </button>
                       )}
@@ -189,7 +219,6 @@ const Page = () => {
               </div>
             </div>
 
-            {/* Banners injected at specific positions */}
             {index === 1 && (
               <div className="bg-[#5B4257] py-6 px-4 text-white flex items-center justify-center text-lg font-semibold gap-2 rounded-xl">
                 <CheckCircle className="text-white" size={24} />
@@ -199,7 +228,7 @@ const Page = () => {
             {index === 2 && (
               <div className="bg-[#5B4257] py-6 px-4 text-white flex items-center justify-center text-lg font-semibold gap-2 rounded-xl">
                 <CheckCircle className="text-white" size={24} />
-                You&apos;re halfway there. Your orders are raised!
+                You're halfway there. Your orders are raised!
               </div>
             )}
             {index === 4 && (
@@ -211,6 +240,52 @@ const Page = () => {
           </React.Fragment>
         ))}
       </section>
+
+      {/* Modal Form */}
+      {showForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg w-full max-w-md">
+            <h3 className="text-xl font-bold mb-4">Discovery Form</h3>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                required
+                className="w-full border p-2 rounded"
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                required
+                className="w-full border p-2 rounded"
+              />
+              <textarea
+                name="message"
+                placeholder="Describe your requirements..."
+                required
+                className="w-full border p-2 rounded"
+              />
+              <div className="flex justify-between items-center">
+                <button
+                  type="submit"
+                  className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                >
+                  Submit
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowForm(false)}
+                  className="text-gray-600 hover:text-black"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </main>
   );
 };
