@@ -1,5 +1,3 @@
-
-
 import Image from "next/image";
 import kitchenImg from "../public/mainpageimg1.jpg";
 import factoryImg from "@/public/mainpageimg1.jpg";
@@ -8,6 +6,7 @@ import ContactForm from "@/components/ContactForm";
 import { client } from "@/lib/sanity";
 import connectMongo from "@/lib/mongoose";
 import User from "@/models/User";
+import Review from "@/models/Review";
 import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import Hero from "@/components/Hero";
 
@@ -61,8 +60,26 @@ async function getBlogs() {
 
 export default async function HomePage() {
   await connectMongo();
-  const vendors = await User.find({ role: "designer" }).limit(6);
+  const designers = await User.find({ role: "designer" }).limit(6);
   const blogs = await getBlogs();
+
+  const vendors = await Promise.all(
+    designers.map(async (vendor) => {
+      const reviews = await Review.find({ vendor: vendor._id });
+      const totalRating = reviews.reduce((sum, r) => sum + r.rating, 0);
+      const avgRating = reviews.length > 0 ? totalRating / reviews.length : 0;
+
+      return {
+        _id: vendor._id,
+        name: vendor.name,
+        profileImage: vendor.profileImage || "",
+        location: vendor.location || "",
+        bio: vendor.bio || "",
+        reviewCount: reviews.length,
+        avgRating,
+      };
+    })
+  );
 
   return (
     <section className="bg-white min-h-screen">
@@ -194,30 +211,57 @@ export default async function HomePage() {
 
       <ContactForm />
 
-      {/* Vendors */}
+ {/* Vendors */}
       <div className="max-w-7xl mx-auto px-6 py-12">
         <h2 className="text-2xl font-semibold mb-8 text-gray-800">Popular Vendors</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 place-items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {vendors.map((vendor) => (
             <Link
               key={vendor._id}
               href={`/vendors/${vendor._id}`}
-              className="flex flex-col items-center text-center group"
+              className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-4 group"
             >
-              <div className="w-32 h-32 rounded-full overflow-hidden shadow-lg mb-4 transition-transform duration-300 group-hover:scale-110">
-               <Image
-  src={vendor.profileImage || "/vendor.jpg"} // fallback if missing
-  alt={vendor.name}
-  width={128}
-  height={128}
-  className="w-full h-full object-cover rounded-full"
-/>
+              <div className="flex flex-col items-center text-center">
+                <div className="w-24 h-24 rounded-full overflow-hidden shadow-md mb-3">
+                  <Image
+                    src={vendor.profileImage || "/vendor.jpg"}
+                    alt={vendor.name}
+                    width={96}
+                    height={96}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 group-hover:text-black">
+                  {vendor.name}
+                </h3>
+                <p className="text-sm text-gray-500">{vendor.location || "Unknown Location"}</p>
+                <div className="flex items-center justify-center mt-2 space-x-1">
+                  {[...Array(5)].map((_, i) => (
+                    <svg
+                      key={i}
+                      className={`w-4 h-4 ${
+                        i < Math.round(vendor.avgRating) ? "text-yellow-400" : "text-gray-300"
+                      }`}
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path d="M10 15l-5.878 3.09 1.122-6.545L.488 6.91l6.567-.955L10 0l2.945 5.955 6.567.955-4.756 4.635 1.122 6.545z" />
+                    </svg>
+                  ))}
+                  <span className="ml-1 text-xs text-gray-600">
+                    ({vendor.reviewCount || 0})
+                  </span>
+                </div>
+                <p className="mt-3 text-sm text-gray-600 line-clamp-3">
+                  {vendor.bio || "Experienced vendor providing top-quality interior solutions."}
+                </p>
               </div>
-              <h3 className="text-lg font-semibold text-gray-800 group-hover:text-black">{vendor.name}</h3>
             </Link>
           ))}
         </div>
       </div>
+
+
 
       {/* Banner */}
       <div className="w-full">

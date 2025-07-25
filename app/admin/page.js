@@ -23,10 +23,23 @@ export default function AdminPage() {
     bio: "",
     skills: "",
     portfolioImages: "",
+
+    // New: Review fields
+    reviewName: "",
+    reviewEmail: "",
+    reviewRating: "",
+    reviewMessage: "",
   });
 
   const subcategoriesMap = {
-    Interior: ["Residential Interior", "Commercial Interior", "1BHK Interior Design", "Office Design", "Wall Panel Design", "Modular Kitchen"],
+    Interior: [
+      "Residential Interior",
+      "Commercial Interior",
+      "1BHK Interior Design",
+      "Office Design",
+      "Wall Panel Design",
+      "Modular Kitchen",
+    ],
     Architecture: ["Residential Architecture", "Landscape Architecture"],
     Furniture: ["Custom Furniture", "Modular Furniture", "Bespoke Furniture"],
   };
@@ -61,21 +74,55 @@ export default function AdminPage() {
     e.preventDefault();
     let vendorId = formData.vendor;
 
+    // Create new vendor if needed
     if (addNewVendor && newVendorData.name && newVendorData.email) {
       const res = await fetch("/api/vendors", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...newVendorData,
-          skills: newVendorData.skills.split(",").map((s) => s.trim()),
-          portfolioImages: newVendorData.portfolioImages.split(",").map((url) => url.trim()),
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    name: newVendorData.name,
+    email: newVendorData.email,
+    profileImage: newVendorData.profileImage,
+    location: newVendorData.location,
+    bio: newVendorData.bio,
+    skills: newVendorData.skills.split(",").map((s) => s.trim()),
+    portfolioImages: newVendorData.portfolioImages
+      .split(",")
+      .map((url) => url.trim()),
 
-        }),
-      });
+    // ✅ Include review fields
+    reviewName: newVendorData.reviewName,
+    reviewEmail: newVendorData.reviewEmail,
+    reviewRating: newVendorData.reviewRating,
+    reviewMessage: newVendorData.reviewMessage,
+  }),
+});
+
+
       const data = await res.json();
       vendorId = data._id;
+
+      // ✅ Submit review for new vendor
+      if (
+        newVendorData.reviewName &&
+        newVendorData.reviewEmail &&
+        newVendorData.reviewRating
+      ) {
+        await fetch("/api/reviews", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            vendor: vendorId,
+            name: newVendorData.reviewName,
+            email: newVendorData.reviewEmail,
+            rating: Number(newVendorData.reviewRating),
+            message: newVendorData.reviewMessage || "",
+          }),
+        });
+      }
     }
 
+    // Create service
     const res = await fetch("/api/services", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -101,6 +148,10 @@ export default function AdminPage() {
         bio: "",
         skills: "",
         portfolioImages: "",
+        reviewName: "",
+        reviewEmail: "",
+        reviewRating: "",
+        reviewMessage: "",
       });
       setAddNewVendor(false);
     } else {
@@ -138,8 +189,10 @@ export default function AdminPage() {
           <option value="add_new">+ Add New Vendor</option>
         </select>
 
+        {/* New Vendor Form */}
         {addNewVendor && (
           <div className="space-y-2 bg-gray-50 p-4 rounded border mt-2">
+            <h2 className="text-lg font-semibold">New Vendor Details</h2>
             <input type="text" name="name" placeholder="Vendor Name" value={newVendorData.name} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
             <input type="email" name="email" placeholder="Vendor Email" value={newVendorData.email} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
             <input type="text" name="profileImage" placeholder="Vendor Profile Image URL" value={newVendorData.profileImage} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
@@ -147,6 +200,12 @@ export default function AdminPage() {
             <textarea name="bio" placeholder="Vendor Bio" value={newVendorData.bio} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
             <input type="text" name="skills" placeholder="Vendor Skills (comma separated)" value={newVendorData.skills} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
             <input type="text" name="portfolioImages" placeholder="Portfolio Image URLs (comma separated)" value={newVendorData.portfolioImages} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+
+            <h3 className="font-semibold mt-4">Initial Review</h3>
+            <input type="text" name="reviewName" placeholder="Reviewer Name" value={newVendorData.reviewName} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <input type="email" name="reviewEmail" placeholder="Reviewer Email" value={newVendorData.reviewEmail} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <input type="number" name="reviewRating" placeholder="Rating (1 to 5)" min="1" max="5" value={newVendorData.reviewRating} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <textarea name="reviewMessage" placeholder="Review Message" value={newVendorData.reviewMessage} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
           </div>
         )}
 
