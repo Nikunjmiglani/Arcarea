@@ -7,6 +7,7 @@ import { client } from "@/lib/sanity";
 import connectMongo from "@/lib/mongoose";
 import User from "@/models/User";
 import Review from "@/models/Review";
+import Head from 'next/head';
 //import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import Hero from "@/components/Hero";
 import VendorCardWithSlideshow from "@/components/VendorCardWithSlideshow";
@@ -67,6 +68,64 @@ export default async function HomePage() {
   const blogs = await getBlogs();
 
   return (
+    <>
+    <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: `{
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "name": "ArcArea",
+              "url": "https://www.arcarea.in",
+              "logo": "https://www.arcarea.in/Arcarea-logo.png",
+              "image": "https://www.arcarea.in/Arcarea-logo.png",
+              "description": "ArcArea is India’s first Vastu-aligned Interior Design and Construction Marketplace. Connect with verified architects, interior designers, contractors, and vastu experts — all under one roof.",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "G-02, Best Sky Tower, Netaji Subhash Place, Pitampura",
+                "addressLocality": "Delhi",
+                "addressRegion": "Delhi",
+                "postalCode": "110034",
+                "addressCountry": "IN"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "28.7041",
+                "longitude": "77.1025"
+              },
+              "openingHours": "Mo-Sa 10:00-19:00",
+              "telephone": "+91-9643531515",
+              "email": "info@arcarea.in",
+              "priceRange": "₹₹₹",
+              "sameAs": [
+                "https://www.facebook.com/arcarea.in",
+                "https://www.instagram.com/arcarea_official",
+                "https://www.linkedin.com/company/arcarea",
+                "https://www.youtube.com/@arcarea.in"
+              ],
+              "founder": {
+                "@type": "Person",
+                "name": "Sandeep Kumar"
+              },
+              "foundingDate": "2024-06-18",
+              "foundingLocation": "Delhi, India",
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "187"
+              },
+              "areaServed": [{
+                "@type": "Place",
+                "name": "India"
+              }],
+              "keywords": "Vastu Interior Designer, Construction Marketplace India, Interior Contractor Delhi, Verified Interior Vendors, ArcArea, Home Design Experts, Modular Kitchen Design, Office Interior Renovation, Custom Furniture, Interior Architecture India"
+            }`,
+          }}
+        />
+      </Head>
+
+
     <section className="bg-white min-h-screen">
       <Hero />
 
@@ -255,5 +314,6 @@ export default async function HomePage() {
         </Link>
       </div>
     </section>
+    </>
   );
 }
