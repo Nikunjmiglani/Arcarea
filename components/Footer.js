@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300 bottom-0 ">
+    <footer className="bg-gray-900 text-gray-300 bottom-0">
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
 
         {/* Logo and Description */}
@@ -10,7 +11,7 @@ export default function Footer() {
           <h2 className="text-2xl font-bold text-white mb-3">ArcArea</h2>
           <p className="text-sm text-gray-400">
             ArcArea is India’s first vastu-aligned marketplace connecting verified interior designers, architects, modular kitchen experts, and custom furniture makers across 60+ cities.
-            We simplify home and office design with trusted professionals, vastu-based planning, and affordable project solutions — all under one roof.
+            We simplify home and office design with trusted professionals, vastu-based planning, and affordable project solutions — all under one roof.
           </p>
         </div>
 
@@ -42,15 +43,18 @@ export default function Footer() {
             <li><Link href="/terms" className="hover:text-white">Terms of Service</Link></li>
           </ul>
 
-          <div className="flex space-x-4 mt-4">
-            <a href="#" className="hover:text-white">
-              <i className="fab fa-facebook-f"></i>
+          <div className="flex space-x-4 mt-4 text-xl">
+            <a href="https://www.facebook.com/migglaofficial" target="_blank" rel="noopener noreferrer" className="hover:text-white">
+              <FaFacebookF />
             </a>
-            <a href="#" className="hover:text-white">
-              <i className="fab fa-twitter"></i>
+            <a href="https://x.com/miggla_official" target="_blank" rel="noopener noreferrer" className="hover:text-white">
+              <FaTwitter />
             </a>
-            <a href="#" className="hover:text-white">
-              <i className="fab fa-instagram"></i>
+            <a href="https://www.youtube.com/@miggla_official" target="_blank" rel="noopener noreferrer" className="hover:text-white">
+              <FaInstagram />
+            </a>
+            <a href="https://www.linkedin.com/company/miggla/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="hover:text-white">
+              <FaLinkedinIn />
             </a>
           </div>
         </div>

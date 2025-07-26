@@ -17,7 +17,12 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Left - Logo */}
         <Link href="/" className="flex items-center text-xl font-semibold">
-          <img src="/ArcArea-logo.png" className="w-20 h-auto" alt="ArcArea Logo" />
+         <img
+  src="/ArcArea-logo.png"
+  className="w-24 h-auto -my-1"
+  alt="ArcArea Logo"
+/>
+
         </Link>
 
         {/* Desktop Links */}

@@ -45,13 +45,13 @@ export default function page() {
 
           <div className="space-y-1">
             <p className="font-medium mt-4">📱 Call or WhatsApp</p>
-            <p>+91-XXXXXXXXXX<br />Available Mon–Sat | 10:00 AM – 7:00 PM IST</p>
+            <p>+91-9643531515<br />Available Mon–Sat | 10:00 AM – 7:00 PM IST</p>
           </div>
 
           <div className="space-y-1">
             <p className="font-medium mt-4">📧 Email Support</p>
             <p>
-              <a href="mailto:support@arcarea.in" className="text-blue-600 underline">support@arcarea.in</a><br />
+              <a href="mailto:info@arcarea.in" className="text-blue-600 underline">support@arcarea.in</a><br />
               For listing, collaboration, or client service queries
             </p>
           </div>
