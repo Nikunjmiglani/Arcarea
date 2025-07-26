@@ -60,9 +60,9 @@ async function getBlogs() {
 }
 
 export default async function HomePage() {
-  const res = await fetch("http://localhost:3000/api/vendors/popular", {
-    cache: "no-store",
-  });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/vendors/popular`, {
+  cache: "no-store",
+});
   const vendors = await res.json();
   const blogs = await getBlogs();
 

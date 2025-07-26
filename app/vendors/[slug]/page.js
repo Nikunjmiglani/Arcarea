@@ -13,7 +13,7 @@ export default function VendorProfilePage() {
   useEffect(() => {
     if (!slug) return;
 
-    fetch(`/api/vendors/slug/${slug}`) // ✅ new API route using slug
+    fetch(`/api/vendors/slug/${slug}`) 
       .then(res => res.json())
       .then(data => {
         setVendor(data.vendor);
