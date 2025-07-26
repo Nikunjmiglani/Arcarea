@@ -45,11 +45,12 @@ export default function VendorCard({ vendor }) {
         <p className="text-sm text-gray-500">{vendor.location || 'Unknown Location'}</p>
 
         {/* ✅ Working Since */}
-       <p className="text-sm text-gray-500">
+     <p className="text-sm text-gray-500">
   {vendor.workingSince
-    ? `${new Date().getFullYear() - Number(vendor.workingSince)} years of experience`
+    ? `Since ${vendor.workingSince}`
     : 'Experience not available'}
 </p>
+
 
 
         <div className="flex items-center justify-center mt-2 space-x-1">

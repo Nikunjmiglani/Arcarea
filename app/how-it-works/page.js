@@ -287,6 +287,94 @@ const Page = () => {
           </div>
         </div>
       )}
+      {/* Bonus & Disclaimer Section */}
+<section className="bg-gray-100 py-16 px-6 sm:px-12 lg:px-32 text-gray-800 space-y-12">
+  {/* Bonus Campaign */}
+  <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+    <h3 className="text-2xl font-bold mb-4">📸 Bonus from ArcArea</h3>
+    <p className="text-lg text-gray-700">
+      Enjoy a complimentary professional photoshoot of your finished space as part of our <strong>#MyArcAreaHome</strong> campaign.
+    </p>
+  </div>
+
+  {/* Disclaimer & Platform Info */}
+  <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 space-y-6">
+    <h3 className="text-2xl font-bold mb-4">🔒 Platform Responsibility & Payment Disclaimer</h3>
+
+    <div>
+      <h4 className="font-semibold text-lg mb-2">✅ ArcArea’s Role</h4>
+      <p>
+        ArcArea is a technology-based discovery and verification platform. We help you connect with verified professionals across interior design, construction, and furniture services.
+        <br />
+        <strong>We are not a contractor, agency, or intermediary in your project.</strong>
+      </p>
+    </div>
+
+    <div>
+      <h4 className="font-semibold text-lg mb-2">📋 What We Verify</h4>
+      <ul className="list-disc list-inside space-y-1">
+        <li>Valid identification and business documents</li>
+        <li>Verified work samples, client references, and project locations</li>
+        <li>Internal screening and onboarding clearance</li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 className="font-semibold text-lg mb-2">⚠️ What We Do Not Control</h4>
+      <ul className="list-disc list-inside space-y-1">
+        <li>Execution, supervision, or timelines of your project</li>
+        <li>Payment terms, refunds, or disputes</li>
+        <li>Any contractual or delivery-related misunderstandings</li>
+        <li>We do not act as an escrow or legal party in your agreement</li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 className="font-semibold text-lg mb-2">💳 Payment Terms</h4>
+      <p className="mb-2">All payments — including design fees, materials, and labour — are:</p>
+      <ul className="list-disc list-inside space-y-1">
+        <li>Mutually agreed between you and the vendor</li>
+        <li>Made only to the vendor’s official bank account</li>
+        <li><strong>Never to ArcArea or any third-party claiming representation</strong></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 className="font-semibold text-lg mb-2">🛡️ Legal Disclaimer</h4>
+      <p className="mb-2">
+        ArcArea shall not be held liable for:
+      </p>
+      <ul className="list-disc list-inside space-y-1">
+        <li>Payment issues or quality disputes</li>
+        <li>Project delays or scope changes</li>
+        <li>Any financial or legal misunderstandings between parties</li>
+      </ul>
+      <p className="mt-2">
+        We recommend documenting all agreements, requesting invoices, and verifying GST or licenses before making payments.
+      </p>
+    </div>
+
+    <div>
+      <h4 className="font-semibold text-lg mb-2">🤝 Our Commitment</h4>
+      <ul className="list-disc list-inside space-y-1">
+        <li>Verified, commission-free professional listings</li>
+        <li>Transparent onboarding and support throughout</li>
+        <li>Non-involvement in your financial transactions or execution details</li>
+      </ul>
+      <p className="mt-2">
+        We’re always here to guide you, but final project responsibility lies with your selected professional.
+      </p>
+    </div>
+
+    <div className="mt-6 text-center">
+      <p className="font-semibold text-lg">🙏 Thank You & Welcome to ArcArea</p>
+      <p className="text-gray-700 mt-1">
+        We’re honored to be part of your space transformation journey. Let’s build your dream, the verified and transparent way.
+      </p>
+    </div>
+  </div>
+</section>
+
     </main>
   );
 };
