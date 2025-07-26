@@ -1,4 +1,4 @@
-// /app/api/vendors/popular/route.js
+//app/api/vendors/popular/route.js
 import connectMongo from "@/lib/mongoose";
 import Service from "@/models/Service";
 import User from "@/models/User";
@@ -8,7 +8,6 @@ import { NextResponse } from "next/server";
 export async function GET() {
   await connectMongo();
 
-  // Get top 6 vendors by number of services
   const vendors = await Service.aggregate([
     { $match: { vendor: { $exists: true, $ne: null } } },
     { $group: { _id: "$vendor", serviceCount: { $sum: 1 } } },
@@ -25,7 +24,6 @@ export async function GET() {
     { $unwind: "$vendorData" },
   ]);
 
-  // Fetch and calculate reviews for each vendor
   const enrichedVendors = await Promise.all(
     vendors.map(async (vendor) => {
       const reviews = await Review.find({ vendor: vendor._id });
@@ -35,9 +33,12 @@ export async function GET() {
       return {
         _id: vendor.vendorData._id,
         name: vendor.vendorData.name,
+        slug: vendor.vendorData.slug || vendor.vendorData.name?.toLowerCase().replace(/\s+/g, "-"),
+ 
         profileImage: vendor.vendorData.profileImage || "",
         location: vendor.vendorData.location || "",
         bio: vendor.vendorData.bio || "",
+        workingSince: vendor.vendorData.workingSince || "",
         reviewCount: reviews.length,
         avgRating: avgRating,
       };

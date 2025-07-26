@@ -1,7 +1,8 @@
+//app/api/vendors/[vendorid]/route.js
 import connectMongo from "@/lib/mongoose";
 import User from "@/models/User";
 import Service from "@/models/Service";
-import Review from "@/models/Review"; // (create this if not yet)
+import Review from "@/models/Review";
 
 export async function GET(request, { params }) {
   const { vendorId } = params;

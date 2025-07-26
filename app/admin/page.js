@@ -23,6 +23,7 @@ export default function AdminPage() {
     bio: "",
     skills: "",
     portfolioImages: "",
+    workingSince: "",
 
     // New: Review fields
     reviewName: "",
@@ -76,7 +77,7 @@ export default function AdminPage() {
 
     // Create new vendor if needed
     if (addNewVendor && newVendorData.name && newVendorData.email) {
-      const res = await fetch("/api/vendors", {
+     const res = await fetch("/api/vendors", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
@@ -86,17 +87,19 @@ export default function AdminPage() {
     location: newVendorData.location,
     bio: newVendorData.bio,
     skills: newVendorData.skills.split(",").map((s) => s.trim()),
-    portfolioImages: newVendorData.portfolioImages
-      .split(",")
-      .map((url) => url.trim()),
+    portfolioImages: newVendorData.portfolioImages.split(",").map((url) => url.trim()),
 
-    // ✅ Include review fields
+    // ✅ FIXED: Include this
+    workingSince: newVendorData.workingSince,
+
+    // Review fields
     reviewName: newVendorData.reviewName,
     reviewEmail: newVendorData.reviewEmail,
     reviewRating: newVendorData.reviewRating,
     reviewMessage: newVendorData.reviewMessage,
   }),
 });
+
 
 
       const data = await res.json();
@@ -141,18 +144,20 @@ export default function AdminPage() {
         vendor: "",
       });
       setNewVendorData({
-        name: "",
-        email: "",
-        profileImage: "",
-        location: "",
-        bio: "",
-        skills: "",
-        portfolioImages: "",
-        reviewName: "",
-        reviewEmail: "",
-        reviewRating: "",
-        reviewMessage: "",
-      });
+  name: "",
+  email: "",
+  profileImage: "",
+  location: "",
+  bio: "",
+  skills: "",
+  portfolioImages: "",
+  workingSince: "",
+  reviewName: "",
+  reviewEmail: "",
+  reviewRating: "",
+  reviewMessage: "",
+});
+
       setAddNewVendor(false);
     } else {
       alert("Error creating service");
@@ -190,24 +195,29 @@ export default function AdminPage() {
         </select>
 
         {/* New Vendor Form */}
-        {addNewVendor && (
-          <div className="space-y-2 bg-gray-50 p-4 rounded border mt-2">
-            <h2 className="text-lg font-semibold">New Vendor Details</h2>
-            <input type="text" name="name" placeholder="Vendor Name" value={newVendorData.name} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-            <input type="email" name="email" placeholder="Vendor Email" value={newVendorData.email} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-            <input type="text" name="profileImage" placeholder="Vendor Profile Image URL" value={newVendorData.profileImage} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-            <input type="text" name="location" placeholder="Vendor Location" value={newVendorData.location} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-            <textarea name="bio" placeholder="Vendor Bio" value={newVendorData.bio} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-            <input type="text" name="skills" placeholder="Vendor Skills (comma separated)" value={newVendorData.skills} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-            <input type="text" name="portfolioImages" placeholder="Portfolio Image URLs (comma separated)" value={newVendorData.portfolioImages} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+       {addNewVendor && (
+  <div className="space-y-2 bg-gray-50 p-4 rounded border mt-2">
+    <h2 className="text-lg font-semibold">New Vendor Details</h2>
+    <input type="text" name="name" placeholder="Vendor Name" value={newVendorData.name} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+    <input type="email" name="email" placeholder="Vendor Email" value={newVendorData.email} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+    <input type="text" name="profileImage" placeholder="Vendor Profile Image URL" value={newVendorData.profileImage} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+    <input type="text" name="location" placeholder="Vendor Location" value={newVendorData.location} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
 
-            <h3 className="font-semibold mt-4">Initial Review</h3>
-            <input type="text" name="reviewName" placeholder="Reviewer Name" value={newVendorData.reviewName} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-            <input type="email" name="reviewEmail" placeholder="Reviewer Email" value={newVendorData.reviewEmail} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-            <input type="number" name="reviewRating" placeholder="Rating (1 to 5)" min="1" max="5" value={newVendorData.reviewRating} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-            <textarea name="reviewMessage" placeholder="Review Message" value={newVendorData.reviewMessage} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-          </div>
-        )}
+    {/* ✅ Working Since Field */}
+    <input type="text" name="workingSince" placeholder="Working Since (e.g., 2018)" value={newVendorData.workingSince} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+
+    <textarea name="bio" placeholder="Vendor Bio" value={newVendorData.bio} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+    <input type="text" name="skills" placeholder="Vendor Skills (comma separated)" value={newVendorData.skills} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+    <input type="text" name="portfolioImages" placeholder="Portfolio Image URLs (comma separated)" value={newVendorData.portfolioImages} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+
+    <h3 className="font-semibold mt-4">Initial Review</h3>
+    <input type="text" name="reviewName" placeholder="Reviewer Name" value={newVendorData.reviewName} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+    <input type="email" name="reviewEmail" placeholder="Reviewer Email" value={newVendorData.reviewEmail} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+    <input type="number" name="reviewRating" placeholder="Rating (1 to 5)" min="1" max="5" value={newVendorData.reviewRating} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+    <textarea name="reviewMessage" placeholder="Review Message" value={newVendorData.reviewMessage} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+  </div>
+)}
+
 
         <button type="submit" className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
           Create Service

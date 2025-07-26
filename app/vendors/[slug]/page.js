@@ -5,22 +5,22 @@ import { useParams } from 'next/navigation';
 import Image from 'next/image';
 
 export default function VendorProfilePage() {
-  const { vendorId } = useParams();
+  const { slug } = useParams(); // ✅ using slug from the URL
   const [vendor, setVendor] = useState(null);
   const [services, setServices] = useState([]);
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    if (!vendorId) return;
+    if (!slug) return;
 
-    fetch(`/api/vendors/${vendorId}`)
+    fetch(`/api/vendors/slug/${slug}`) // ✅ new API route using slug
       .then(res => res.json())
       .then(data => {
         setVendor(data.vendor);
         setServices(data.services || []);
         setReviews(data.reviews || []);
       });
-  }, [vendorId]);
+  }, [slug]);
 
   if (!vendor) return <p className="p-4">Loading...</p>;
 
@@ -87,7 +87,9 @@ export default function VendorProfilePage() {
           <div className="space-y-3 mb-6">
             {reviews.map(review => (
               <div key={review._id} className="border p-3 rounded bg-gray-50">
-                <p className="font-semibold">{review.name} ({review.rating}/5)</p>
+                <p className="font-semibold">
+                  {review.name} ({review.rating}/5)
+                </p>
                 <p>{review.message}</p>
               </div>
             ))}
@@ -97,39 +99,40 @@ export default function VendorProfilePage() {
 
       {/* Booking Form */}
       <h2 className="text-xl font-semibold mb-2">Request a Booking</h2>
-     <form
-  onSubmit={async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const res = await fetch('/api/book', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: form.name.value,
-        email: form.email.value,
-        phone: form.phone.value,
-        message: form.message.value,
-        vendorId: vendor._id,
-      }),
-    });
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          const form = e.target;
 
-    if (res.ok) {
-      alert('Booking confirmed! Check your email.');
-      form.reset();
-    } else {
-      alert('Error sending booking request. Try again.');
-    }
-  }}
->
-  <input name="name" required placeholder="Your Name" className="w-full border p-2 rounded" />
-  <input name="email" type="email" required placeholder="Your Email" className="w-full border p-2 rounded" />
-  <input name="phone" placeholder="Phone Number" className="w-full border p-2 rounded" />
-  <textarea name="message" required placeholder="Describe your requirements" className="w-full border p-2 rounded" />
-  <button type="submit" className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
-    Send Request
-  </button>
-</form>
+          const res = await fetch('/api/book', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: form.name.value,
+              email: form.email.value,
+              phone: form.phone.value,
+              message: form.message.value,
+              vendorId: vendor._id,
+            }),
+          });
 
+          if (res.ok) {
+            alert('Booking confirmed! Check your email.');
+            form.reset();
+          } else {
+            alert('Error sending booking request. Try again.');
+          }
+        }}
+        className="space-y-3"
+      >
+        <input name="name" required placeholder="Your Name" className="w-full border p-2 rounded" />
+        <input name="email" type="email" required placeholder="Your Email" className="w-full border p-2 rounded" />
+        <input name="phone" placeholder="Phone Number" className="w-full border p-2 rounded" />
+        <textarea name="message" required placeholder="Describe your requirements" className="w-full border p-2 rounded" />
+        <button type="submit" className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
+          Send Request
+        </button>
+      </form>
     </div>
   );
 }

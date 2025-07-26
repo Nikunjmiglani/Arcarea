@@ -6,8 +6,15 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   await connectMongo();
-  const designers = await User.find({ role: "designer" }).select("name _id");
+  const designers = await User.find({ role: "designer" }).select(
+    "name _id slug workingSince location profileImage bio avgRating reviewCount portfolioImages"
+  );
+
   return NextResponse.json(designers);
+}
+
+function slugify(name) {
+  return name.toLowerCase().replace(/\s+/g, "-").replace(/[^\w\-]+/g, "");
 }
 
 export async function POST(req) {
@@ -15,7 +22,6 @@ export async function POST(req) {
     await connectMongo();
     const body = await req.json();
 
-    // 🔁 Always return the correct vendor (even if already exists)
     let vendor = await User.findOne({ email: body.email });
 
     if (!vendor) {
@@ -23,15 +29,16 @@ export async function POST(req) {
         name: body.name,
         email: body.email,
         role: "designer",
+        slug: slugify(body.name),
         profileImage: body.profileImage || "",
         location: body.location || "",
         phone: body.phone || "",
         bio: body.bio || "",
         skills: Array.isArray(body.skills) ? body.skills : [],
         portfolioImages: Array.isArray(body.portfolioImages) ? body.portfolioImages : [],
+        workingSince: body.workingSince || "", 
       });
 
-      // ✅ Optional review
       if (
         body.reviewName &&
         body.reviewEmail &&

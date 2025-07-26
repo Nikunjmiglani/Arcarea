@@ -6,10 +6,10 @@ import { CheckCircle } from 'lucide-react';
 
 const stepsList = [
   { step: '1', title: 'Share Your Dream with Us', img: '/processimg1.avif' },
-  { step: '2', title: 'Finalize Your Design & Budget', img: '/processimg2.avif' },
-  { step: '3', title: 'Confirm & Kickstart Execution', img: '/processimg3.avif' },
-  { step: '4', title: 'Material Dispatch & Installation', img: '/processimg4.avif' },
-  { step: '5', title: 'Move in', img: '/processimg5.avif' },
+  { step: '3', title: 'Finalize Your Design, Scope & Budget', img: '/processimg2.avif' },
+  { step: '4', title: 'Confirm & Kickstart Execution', img: '/processimg3.avif' },
+  { step: '5', title: 'Material Dispatch & Installation', img: '/processimg4.avif' },
+  { step: '6', title: 'Move In & Celebrate', img: '/processimg5.avif' },
 ];
 
 const homeProcess = [
@@ -23,7 +23,7 @@ const homeProcess = [
       },
       {
         heading: 'Get Matched with Professionals',
-        desc: 'We&rsquo;ll connect you with verified interior designers, contractors, or furniture makers best suited to your project.',
+        desc: 'We’ll connect you with verified interior designers, contractors, or furniture makers best suited to your project.',
       },
     ],
     img: '/processimg1.avif',
@@ -33,7 +33,7 @@ const homeProcess = [
     points: [
       {
         heading: 'Discuss Your Vision',
-        desc: 'Have a free consultation with experts and explore ideas tailored to your needs.',
+        desc: 'Discuss your vision directly with professionals in a cozy consultation setting.',
       },
       {
         heading: 'Receive Initial Design & Estimate',
@@ -43,30 +43,30 @@ const homeProcess = [
     img: '/processimg2.avif',
   },
   {
-    title: 'Step 3: Finalize Scope & Budget',
+    title: 'Step 3: Finalize Your Project Scope & Budget',
     points: [
       {
-        heading: 'Define Materials, Timelines & Preferences',
-        desc: 'Select finishes, materials, and define expectations clearly with your vendor.',
+        heading: 'Select Materials & Preferences',
+        desc: 'Choose laminates, marble, and finishes with your vendor for clarity and transparency.',
       },
       {
         heading: 'Request Quotations & Scope of Work',
-        desc: 'Ask your chosen expert for a formal quotation and work plan. No commissions or hidden charges by ArcArea.',
+        desc: 'Get formal quotations and a project work scope. ArcArea ensures no commissions or hidden charges.',
       },
     ],
     img: '/processimg3.avif',
   },
   {
-    title: 'Step 4: Confirm Your Order & Start Execution',
+    title: 'Step 4: Confirm & Kickstart Execution',
     points: [
       {
         heading: 'Make Initial Milestone Payment',
-        desc: 'Agree on terms and pay the initial amount directly to the professional to start your project.',
+        desc: 'Make a direct payment to the professional after agreement to start the work.',
         badge: 'MILESTONE',
       },
       {
-        heading: 'Site Work Commences',
-        desc: 'Vendor begins execution and shares regular progress updates. ArcArea does not manage site work.',
+        heading: 'On-Site Work Begins',
+        desc: 'Workers start execution on-site under vendor supervision. ArcArea does not manage the work directly.',
       },
     ],
     img: '/processimg4.avif',
@@ -76,12 +76,12 @@ const homeProcess = [
     points: [
       {
         heading: 'Next Milestone Payment & Dispatch',
-        desc: 'Once materials are ready, make the next payment to enable dispatch and on-site delivery.',
+        desc: 'Once materials are ready, make the next milestone payment for dispatch and delivery.',
         badge: 'MILESTONE',
       },
       {
         heading: 'Installation Begins',
-        desc: 'Vendors handle installation directly as per the finalized design.',
+        desc: 'Installers begin setting up as per the approved designs. Vendors coordinate this directly.',
       },
     ],
     img: '/processimg5.avif',
@@ -90,17 +90,17 @@ const homeProcess = [
     title: 'Step 6: Move In & Celebrate',
     points: [
       {
-        heading: 'Your Home is Ready!',
-        desc: 'Enjoy your dream space &mdash; a true reflection of your lifestyle and taste.',
+        heading: 'Welcome to Your New Space',
+        desc: 'Move in to your newly completed home. A true reflection of your style and spirit.',
       },
       {
-        heading: 'Celebrate the Completion',
-        desc: 'Move in and cherish the journey from dream to reality.',
+        heading: 'Celebrate with ArcArea',
+        desc: 'Enjoy a free professional photoshoot of your space as part of our #MyArcAreaHome campaign.',
       },
     ],
     img: '/processimg5.avif',
   },
-];
+]
 
 const Page = () => {
   const [showForm, setShowForm] = useState(false);
@@ -176,7 +176,7 @@ const Page = () => {
       </section>
 
       {/* Detailed Process */}
-      <section className="bg-white py-16 px-4 sm:px-8 space-y-24 max-w-7xl mx-auto">
+      <section className="bg-white py-1 px-4 sm:px-8 space-y-24 max-w-7xl mx-auto">
         {homeProcess.map((item, index) => (
           <React.Fragment key={index}>
             <div className="flex flex-col md:flex-row items-center justify-between gap-10">
