@@ -45,7 +45,7 @@ export default async function SearchPage({ searchParams }) {
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
       <h1 className="text-2xl font-semibold mb-6">
-        Search results for “{query}”:
+        Search results for &quot;{query}&quot;:
       </h1>
 
       {/* Services Section */}
@@ -111,7 +111,7 @@ export default async function SearchPage({ searchParams }) {
           <ul className="space-y-4">
             {results.reviews.map((review) => (
               <li key={review._id} className="border-b pb-2">
-                <p className="text-sm text-gray-700 mb-1">"{review.message}"</p>
+                <p className="text-sm text-gray-700 mb-1">&quot;{review.message}&quot;</p>
                 <p className="text-xs text-gray-500">
                   — {review.user?.name || "Anonymous"}
                 </p>

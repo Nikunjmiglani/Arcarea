@@ -288,16 +288,11 @@ export default async function HomePage() {
       <ContactForm />
 
  {/* Vendors */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <h2 className="text-2xl font-semibold mb-8 text-gray-800">Popular Vendors</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-         {vendors.map(
-  (vendor) =>
-    vendor.slug && <VendorCardWithSlideshow key={vendor._id} vendor={vendor} />
-)}
-
-        </div>
-      </div>
+     <div className="grid grid-cols-1  ml-5 mb-10 sm:grid-cols-2 lg:grid-cols-3 gap-1">
+  {vendors.map((vendor) => (
+    <VendorCardWithSlideshow key={vendor._id} vendor={vendor} />
+  ))}
+</div>
 
 
 

@@ -40,18 +40,12 @@ export default {
       },
     },
     {
-      name: 'category',
-      title: 'Category',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Trending', value: 'trending' },
-          { title: 'Tips & Tricks', value: 'tips' },
-          { title: 'Interior Design', value: 'interior' },
-          { title: 'Architecture', value: 'architecture' },
-        ],
-      },
-    },
+  name: 'category',
+  title: 'Category',
+  type: 'reference',
+  to: [{ type: 'category' }],
+  validation: Rule => Rule.required(),
+},
     {
       name: 'content',
       title: 'Content',

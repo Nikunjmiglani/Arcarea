@@ -23,7 +23,7 @@ export default function VendorCard({ vendor }) {
   return (
     <Link
       href={`/vendors/${vendor.slug}`}
-      className="bg-white rounded-xl border shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden max-w-sm"
+      className="bg-white rounded-xl hover:scale-[1.02] duration-200 border shadow-sm hover:shadow-md transition-all overflow-hidden max-w-sm"
     >
       {/* Top bar with name & since */}
       <div className="flex justify-between items-center px-4 pt-4">
@@ -36,7 +36,7 @@ export default function VendorCard({ vendor }) {
       </div>
 
       {/* Image (carousel) */}
-      <div className="w-full h-48 relative mt-3">
+      <div className="w-full h-48 relative mt-3 ">
         <Image
           key={displayImage}
           src={displayImage}
