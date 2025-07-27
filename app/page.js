@@ -172,7 +172,7 @@ export default async function HomePage() {
       {/* Timeline */}
       <div className="bg-white py-16 px-4 sm:px-8">
         <h2 className="text-center text-3xl sm:text-4xl font-bold mb-12">
-          PROJECT COMPLETION IN <span className="text-purple-600">40 WORKING DAYS*</span>
+          PROJECT COMPLETION IN <span className="text-purple-600">50 WORKING DAYS*</span>
         </h2>
         <div className="flex flex-col sm:flex-row justify-between items-center gap-12 max-w-7xl mx-auto">
           {timeline.map((step, index) => (

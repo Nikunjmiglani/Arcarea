@@ -21,3 +21,18 @@
     @apply bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition;
   }
 }
+
+@layer utilities {
+  @keyframes scroll {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-scroll {
+    animation: scroll 40s linear infinite;
+  }
+}

@@ -176,10 +176,10 @@ const Page = () => {
       </section>
 
       {/* Detailed Process */}
-      <section className="bg-white py-1 px-4 sm:px-8 space-y-24 max-w-7xl mx-auto">
+      <section className="bg-white py-0 px-4 sm:px-8 space-y-2 max-w-7xl mx-auto">
         {homeProcess.map((item, index) => (
           <React.Fragment key={index}>
-            <div className="flex flex-col md:flex-row items-center justify-between gap-10">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-7">
               <div className="md:w-1/2 space-y-4">
                 <h3 className="text-2xl font-bold">{item.title}</h3>
                 <ul className="space-y-6">
@@ -288,17 +288,9 @@ const Page = () => {
         </div>
       )}
       {/* Bonus & Disclaimer Section */}
-<section className="bg-gray-100 py-16 px-6 sm:px-12 lg:px-32 text-gray-800 space-y-12">
-  {/* Bonus Campaign */}
-  <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-    <h3 className="text-2xl font-bold mb-4">📸 Bonus from ArcArea</h3>
-    <p className="text-lg text-gray-700">
-      Enjoy a complimentary professional photoshoot of your finished space as part of our <strong>#MyArcAreaHome</strong> campaign.
-    </p>
-  </div>
-
+<section className="bg-gray-100 py-3 text-gray-800 space-y-12 w-full">
   {/* Disclaimer & Platform Info */}
-  <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 space-y-6">
+  <div className="bg-white p-6 sm:p-10 lg:p-16 rounded-none shadow-md border border-gray-200 space-y-6">
     <h3 className="text-2xl font-bold mb-4">🔒 Platform Responsibility & Payment Disclaimer</h3>
 
     <div>
@@ -367,13 +359,14 @@ const Page = () => {
     </div>
 
     <div className="mt-6 text-center">
-      <p className="font-semibold text-lg">🙏 Thank You & Welcome to ArcArea</p>
+      <p className="font-semibold text-lg">🙏 Thank You & Welcome to ArcArea Family</p>
       <p className="text-gray-700 mt-1">
         We’re honored to be part of your space transformation journey. Let’s build your dream, the verified and transparent way.
       </p>
     </div>
   </div>
 </section>
+
 
     </main>
   );
