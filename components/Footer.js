@@ -44,16 +44,16 @@ export default function Footer() {
           </ul>
 
           <div className="flex space-x-4 mt-4 text-xl">
-            <a href="https://www.facebook.com/migglaofficial" target="_blank" rel="noopener noreferrer" className="hover:text-white">
+            <a href="https://www.facebook.com/arcarea.in" target="_blank" rel="noopener noreferrer" className="hover:text-white">
               <FaFacebookF />
             </a>
             <a href="https://x.com/miggla_official" target="_blank" rel="noopener noreferrer" className="hover:text-white">
               <FaTwitter />
             </a>
-            <a href="https://www.youtube.com/@miggla_official" target="_blank" rel="noopener noreferrer" className="hover:text-white">
+            <a href="https://www.youtube.com/@arcarea" target="_blank" rel="noopener noreferrer" className="hover:text-white">
               <FaInstagram />
             </a>
-            <a href="https://www.linkedin.com/company/miggla/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="hover:text-white">
+            <a href="https://www.linkedin.com/company/arcarea-official/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="hover:text-white">
               <FaLinkedinIn />
             </a>
           </div>
