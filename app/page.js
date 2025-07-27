@@ -9,6 +9,7 @@ import User from "@/models/User";
 import Review from "@/models/Review";
 import Hero from "@/components/Hero";
 import VendorCardWithSlideshow from "@/components/VendorCardWithSlideshow";
+import { getTrendingBlogs } from '@/lib/queries';
 
 export const revalidate = 60;
 
@@ -64,6 +65,7 @@ export default async function HomePage() {
   });
   const vendors = await res.json();
   const blogs = await getBlogs();
+  const trendingBlogs = await getTrendingBlogs();
 
   return (
     <>
@@ -229,6 +231,38 @@ export default async function HomePage() {
           </div>
         </div>
       </div>
+
+      <section className="max-w-7xl mx-auto px-4 py-10">
+        <h2 className="text-2xl font-bold mb-4">🔥 Trending Blogs</h2>
+
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {trendingBlogs.map((blog) => (
+            <Link
+              key={blog._id}
+              href={`/blog/${blog.slug.current}`}
+              className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition"
+            >
+              <div className="h-48 relative">
+                <Image
+                  src={blog.image?.asset?.url || '/placeholder.jpg'}
+                  alt={blog.title}
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
+              </div>
+
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-gray-900">{blog.title}</h3>
+                <p className="text-sm text-gray-500 mt-1">
+                  By {blog.author?.name || 'Unknown'} •{' '}
+                  {new Date(blog.publishedAt).toLocaleDateString()}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
 
       
 
