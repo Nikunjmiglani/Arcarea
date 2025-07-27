@@ -40,7 +40,20 @@ export default {
       },
     },
     {
-      name: 'content', 
+      name: 'category',
+      title: 'Category',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Trending', value: 'trending' },
+          { title: 'Tips & Tricks', value: 'tips' },
+          { title: 'Interior Design', value: 'interior' },
+          { title: 'Architecture', value: 'architecture' },
+        ],
+      },
+    },
+    {
+      name: 'content',
       title: 'Content',
       type: 'array',
       of: [{ type: 'block' }],
