@@ -38,6 +38,7 @@ export default function ContactForm() {
               <input
                 type="text"
                 name="name"
+                placeholder="Enter your name"
                 required
                 className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:ring-2 focus:ring-gray-400 focus:outline-none"
               />
@@ -48,6 +49,7 @@ export default function ContactForm() {
               <input
                 type="email"
                 name="email"
+                 placeholder="Enter your email"
                 required
                 className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:ring-2 focus:ring-gray-400 focus:outline-none"
               />
@@ -58,6 +60,7 @@ export default function ContactForm() {
               <textarea
                 name="message"
                 rows="4"
+                 placeholder="Enter your query"
                 required
                 className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:ring-2 focus:ring-gray-400 focus:outline-none"
               ></textarea>
