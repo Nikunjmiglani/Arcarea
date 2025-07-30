@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 export default async function BlogList() {
-  const blogs = await client.fetch(`*[_type == "blog"] | order(publishedAt desc){
+  const blogs = await client.fetch(`*[_type == "post"] | order(publishedAt desc){
     title,
     slug,
     publishedAt,

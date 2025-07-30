@@ -1,8 +1,8 @@
-// sanity.config.js
 import { defineConfig } from 'sanity';
-import { deskTool } from 'sanity/desk';
+import { structureTool } from 'sanity/structure';
 import { visionTool } from '@sanity/vision';
-import { schema } from './sanity/schemaTypes'; 
+import { schema } from './sanity/schemaTypes';
+import { structure } from './sanity/structure'; // ✅ fixed path
 
 export default defineConfig({
   basePath: '/studio',
@@ -10,7 +10,10 @@ export default defineConfig({
   title: 'Arcarea CMS',
   projectId: 'zgtxw8fc',
   dataset: 'production',
-  plugins: [deskTool(), visionTool()],
+  plugins: [
+    structureTool({ structure }),
+    visionTool(),
+  ],
   schema: {
     types: schema,
   },

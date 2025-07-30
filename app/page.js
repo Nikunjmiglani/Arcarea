@@ -50,12 +50,13 @@ const features = [
 ];
 
 async function getBlogs() {
-  const query = `*[_type == "blog"] | order(publishedAt desc)[0...10] {
-    title,
-    "slug": slug.current,
-    "image": image.asset->url,
-    publishedAt
-  }`;
+ const query = `*[_type == "post"] | order(publishedAt desc)[0...10] {
+  title,
+  "slug": slug.current,
+  "image": mainImage.asset->url,
+  publishedAt
+}`;
+
   return await client.fetch(query);
 }
 
@@ -243,13 +244,13 @@ export default async function HomePage() {
               className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition"
             >
               <div className="h-48 relative">
-                <Image
-                  src={blog.image?.asset?.url || '/placeholder.jpg'}
-                  alt={blog.title}
-                  fill
-                  className="object-cover"
-                  unoptimized
-                />
+              <Image
+  src={blog.mainImage?.asset?.url || '/placeholder.jpg'}
+  alt={blog.title}
+  fill
+  className="object-cover"
+/>
+
               </div>
 
               <div className="p-4">
