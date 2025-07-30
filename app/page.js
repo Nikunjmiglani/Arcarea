@@ -60,32 +60,6 @@ async function getBlogs() {
   return await client.fetch(query);
 }
 
-export const metadata = {
-  title: "Home",
-  description: "Find top-rated vastu interior designers and contractors at ArcArea.",
-  openGraph: {
-    title: "Home | ArcArea",
-    description:
-      "India’s best marketplace for vastu-aligned interiors, construction, and modular design services.",
-    images: [
-      {
-        url: "https://www.arcarea.in/OG-arcarea.jpg",
-        width: 1200,
-        height: 630,
-        alt: "ArcArea Home Page Image",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "ArcArea Home",
-    description:
-      "Explore India's most trusted interior design and construction platform.",
-    images: ["https://www.arcarea.in/OG-arcarea.jpg"],
-  },
-};
-
-
 export default async function HomePage() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/vendors/popular`, {
     cache: "no-store",
