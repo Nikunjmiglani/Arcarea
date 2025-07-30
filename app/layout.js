@@ -21,6 +21,28 @@ export const metadata = {
   icons: {
     icon: "/favicon.jpg",
   },
+  openGraph: {
+    title: "ArcArea - India's First Marketplace for Verified Interior Design, Vastu & Construction Experts",
+    description:
+      "Connect with verified interior designers, vastu consultants, and construction experts across India. From small spaces to luxury transformations, ArcArea is your trusted partner.",
+    url: "https://arcarea.in",
+    siteName: "ArcArea",
+    images: [
+      {
+        url: "https://arcarea.in/og-image.jpg",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ArcArea - Verified Home Design Experts Near You",
+    description:
+      "Discover trusted professionals for interior, vastu & construction on ArcArea. Simplify your space journey today.",
+    images: ["https://arcarea.in/og-image.jpg"],
+  },
 };
 
 export default function RootLayout({ children }) {
