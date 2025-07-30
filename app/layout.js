@@ -26,7 +26,7 @@ export const metadata = {
     icon: "/favicon.jpg",
   },
   openGraph: {
-    title: "ArcArea - India's First Marketplace for Verified Interior Design, Vastu & Construction Experts",
+    title: "ArcArea - India's First Marketplace for Interior Design, Vastu & Construction Experts",
     description:
       "Connect with verified interior designers, vastu consultants, and construction experts across India. From small spaces to luxury transformations, ArcArea is your trusted partner.",
     url: "https://arcarea.in",
