@@ -193,7 +193,7 @@ const page = () => {
         </p>
         <div className="mt-4 space-y-1">
           <p>🔗 Website: <a href="https://www.arcarea.in" className="text-blue-600 underline">www.arcarea.in</a></p>
-          <p>📱 WhatsApp: +91-XXXXXXXXXX</p>
+          <p>📱 WhatsApp: +91-9643531515</p>
           <p>📩 Email: <a href="mailto:support@arcarea.in" className="text-blue-600 underline">support@arcarea.in</a></p>
           <p>📸 Instagram: <a href="https://instagram.com/shubhvaas" className="text-blue-600 underline">@shubhvaas</a></p>
         </div>

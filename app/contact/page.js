@@ -38,8 +38,8 @@ export default function page() {
             <p className="font-medium">🏠 Office Address</p>
             <p>
               ArcArea | Powered by Miggla Industries Pvt. Ltd.<br />
-              (Physical office address can be added here)<br />
-              Serving PAN India – Delhi, Mumbai, Bangalore, Ahmedabad, Jaipur, Hyderabad & 60+ Cities
+              NSP, New Delhi<br />
+              Serving PAN India
             </p>
           </div>
 
