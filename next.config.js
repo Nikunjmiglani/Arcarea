@@ -7,6 +7,7 @@ const nextConfig = {
       'miggla.com',
       'www.miggla.com',
       'www.homemakersinterior.com',
+      'www.nikunj.space',
     ],
   },
 };

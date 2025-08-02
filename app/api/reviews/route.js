@@ -11,25 +11,26 @@ export async function POST(req) {
 
     console.log("📥 Received review body:", body);
 
-    const { vendorId, name, email, rating, message } = body;
+    // ✅ Use 'vendor' instead of 'vendorId'
+    const { vendor, name, email, rating, message } = body;
 
-    // ✅ Validate required fields (email is now optional)
-    if (!vendorId || !name || !rating || !message) {
-      console.warn("❌ Missing required fields:", { vendorId, name, rating, message });
+    // ✅ Validate required fields (email is optional)
+    if (!vendor || !name || !rating || !message) {
+      console.warn("❌ Missing required fields:", { vendor, name, rating, message });
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
     // ✅ Validate MongoDB ObjectId format
-    if (!/^[0-9a-fA-F]{24}$/.test(vendorId)) {
-      console.warn("❌ Invalid vendorId format:", vendorId);
-      return NextResponse.json({ error: "Invalid vendorId format" }, { status: 400 });
+    if (!/^[0-9a-fA-F]{24}$/.test(vendor)) {
+      console.warn("❌ Invalid vendor ID format:", vendor);
+      return NextResponse.json({ error: "Invalid vendor ID format" }, { status: 400 });
     }
 
-    // ✅ Create the review (email fallback for anonymous users)
+    // ✅ Create the review
     const review = await Review.create({
-      vendor: vendorId,
+      vendor,
       name,
-      email: email || "anon@arcarea.com",
+      email: email || "anon@arcarea.com", 
       rating: Number(rating),
       message,
     });

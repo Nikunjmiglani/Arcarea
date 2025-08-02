@@ -10,9 +10,10 @@ export default function VendorProfilePage() {
   const [vendor, setVendor] = useState(null);
   const [services, setServices] = useState([]);
   const [reviews, setReviews] = useState([]);
-   const [newRating, setNewRating] = useState(0);
-const [hoverRating, setHoverRating] = useState(0);
-const [newReviewMessage, setNewReviewMessage] = useState("");
+  const [newRating, setNewRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
+  const [newReviewMessage, setNewReviewMessage] = useState("");
+  const [carouselIndex, setCarouselIndex] = useState(0);
 
   useEffect(() => {
     if (!slug) return;
@@ -26,6 +27,15 @@ const [newReviewMessage, setNewReviewMessage] = useState("");
       });
   }, [slug]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (vendor?.portfolioImages?.length > 6) {
+        setCarouselIndex(prev => (prev + 6) % vendor.portfolioImages.length);
+      }
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [vendor?.portfolioImages]);
+
   if (!vendor) return <p className="p-4">Loading...</p>;
 
   const handleBooking = async (e) => {
@@ -33,16 +43,16 @@ const [newReviewMessage, setNewReviewMessage] = useState("");
     const form = e.target;
 
     const res = await fetch("/api/reviews", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    vendorId: vendor._id,
-    rating: newRating,
-    message: newReviewMessage,
-    name: "Anonymous",       // Or use session.user.name if logged in
-    email: "anon@example.com", // ✅ TEMP FIX — replace with actual user email
-  }),
-});
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        vendorId: vendor._id,
+        rating: newRating,
+        message: newReviewMessage,
+        name: "Anonymous",
+        email: "anon@example.com",
+      }),
+    });
 
     if (res.ok) {
       alert('Booking confirmed! Check your email.');
@@ -52,78 +62,70 @@ const [newReviewMessage, setNewReviewMessage] = useState("");
     }
   };
 
- 
-
+  const displayedImages = vendor.portfolioImages?.slice(carouselIndex, carouselIndex + 6) || [];
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-10">
-      {/* Vendor Header (Styled Like Avira Interiors Listing) */}
-<div className="bg-white rounded shadow overflow-hidden">
-  {/* Top image gallery */}
-  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-    {vendor.portfolioImages?.slice(0, 4).map((url, i) => (
-      <div key={i} className="relative h-48">
-        <Image
-          src={url}
-          alt={`Portfolio ${i + 1}`}
-          layout="fill"
-          objectFit="cover"
-          className="rounded"
-        />
-      </div>
-    ))}
-    {vendor.portfolioImages?.length > 4 && (
-      <div className="relative h-48 bg-black bg-opacity-60 text-white flex items-center justify-center rounded">
-        <span className="text-lg font-semibold">+{vendor.portfolioImages.length - 4} More</span>
-      </div>
-    )}
-  </div>
-
-  {/* Info Section */}
-  <div className="p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-    <div className="flex items-center gap-4">
-      <Image
-        src={vendor.profileImage || '/default-profile.png'}
-        alt={vendor.name}
-        width={80}
-        height={80}
-        className="rounded-full object-cover border"
-      />
-      <div>
-        <h1 className="text-2xl font-bold">{vendor.name}</h1>
-        <p className="text-gray-500">{vendor.location}</p>
-        <div className="flex items-center gap-2 mt-1 text-sm">
-          <span className="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded font-medium">
-            {vendor.avgRating?.toFixed(1) || 'New on ArcArea'} ★
-          </span>
-          <span className="text-gray-600">
-            {vendor.reviewCount || reviews.length} Ratings
-          </span>
-          <span className="bg-green-100 text-green-800 px-2 py-0.5 rounded font-medium">✓ Verified</span>
-          <span className="bg-blue-100 text-blue-800 px-2 py-0.5 rounded">Interior Designers</span>
+      <div className="bg-white rounded shadow overflow-hidden">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2">
+          {displayedImages.map((url, i) => (
+            <div key={i} className="relative h-48">
+              <Image
+                src={url}
+                alt={`Portfolio ${carouselIndex + i + 1}`}
+                fill
+                className="object-cover rounded"
+              />
+            </div>
+          ))}
+          {vendor.portfolioImages?.length > carouselIndex + 6 && (
+            <div className="relative h-48 bg-black bg-opacity-60 text-white flex items-center justify-center rounded">
+              <span className="text-lg font-semibold">+{vendor.portfolioImages.length - (carouselIndex + 6)} More</span>
+            </div>
+          )}
         </div>
-        <p className="text-green-600 mt-1 text-sm">{vendor.workingSince ? `${new Date().getFullYear() - parseInt(vendor.workingSince)} Years in Business` : ''}</p>
+
+        <div className="p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div className="flex items-center gap-4">
+            <Image
+              src={vendor.profileImage || '/default-profile.png'}
+              alt={vendor.name}
+              width={80}
+              height={80}
+              className="rounded-full object-cover border"
+            />
+            <div>
+              <h1 className="text-2xl font-bold">{vendor.name}</h1>
+              <p className="text-gray-500">{vendor.location}</p>
+              <div className="flex items-center gap-2 mt-1 text-sm">
+                <span className="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded font-medium">
+                  {vendor.avgRating?.toFixed(1) || 'New on ArcArea'} ★
+                </span>
+                <span className="text-gray-600">
+                  {vendor.reviewCount || reviews.length} Ratings
+                </span>
+                <span className="bg-green-100 text-green-800 px-2 py-0.5 rounded font-medium">✓ Verified</span>
+                <span className="bg-blue-100 text-blue-800 px-2 py-0.5 rounded">Interior Designers</span>
+              </div>
+              <p className="text-green-600 mt-1 text-sm">{vendor.workingSince ? `${new Date().getFullYear() - parseInt(vendor.workingSince)} Years in Business` : ''}</p>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3 items-start md:items-end">
+            <button
+              onClick={() => {
+                const form = document.getElementById("form");
+                if (form) form.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 flex items-center gap-2"
+            >
+              📩 Send Enquiry
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div className="flex flex-col gap-3 items-start md:items-end">
-     
-     <button
-  onClick={() => {
-    const form = document.getElementById("form");
-    if (form) form.scrollIntoView({ behavior: "smooth" });
-  }}
-  className="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 flex items-center gap-2"
->
-  📩 Send Enquiry
-</button>
-
-    </div>
-  </div>
-</div>
-
-
-      {/* Photos / Portfolio */}
+     {/* Photos / Portfolio */}
       <div>
         <h2 className="text-2xl mt-20 font-semibold mb-3">More Service Images</h2>
         <div className="flex overflow-x-auto gap-4 pb-2">
@@ -326,6 +328,8 @@ const [newReviewMessage, setNewReviewMessage] = useState("");
           </button>
         </form>
       </div>
+
     </div>
   );
 }
+

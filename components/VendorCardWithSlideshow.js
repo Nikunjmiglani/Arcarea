@@ -6,16 +6,18 @@ import Link from 'next/link';
 
 export default function VendorCard({ vendor }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const images =
-    vendor.portfolioImages?.length > 0
-      ? vendor.portfolioImages
-      : [vendor.profileImage || '/vendor.jpg'];
+
+  const images = vendor.portfolioImages?.length
+    ? vendor.portfolioImages
+    : [vendor.profileImage || '/vendor.jpg'];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000);
-    return () => clearInterval(interval);
+    if (images.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % images.length);
+      }, 3000);
+      return () => clearInterval(interval);
+    }
   }, [images.length]);
 
   const displayImage = images[currentImageIndex];
@@ -25,7 +27,7 @@ export default function VendorCard({ vendor }) {
       href={`/vendors/${vendor.slug}`}
       className="bg-white rounded-xl hover:scale-[1.02] duration-200 border shadow-sm hover:shadow-md transition-all overflow-hidden max-w-sm"
     >
-      {/* Top bar with name & since */}
+      {/* Top Bar */}
       <div className="flex justify-between items-center px-4 pt-4">
         <h3 className="text-lg font-semibold text-gray-800 truncate">
           {vendor.name}
@@ -35,8 +37,8 @@ export default function VendorCard({ vendor }) {
         </span>
       </div>
 
-      {/* Image (carousel) */}
-      <div className="w-full h-48 relative mt-3 ">
+      {/* Image Carousel */}
+      <div className="w-full h-48 relative mt-3">
         <Image
           key={displayImage}
           src={displayImage}
@@ -47,7 +49,7 @@ export default function VendorCard({ vendor }) {
         />
       </div>
 
-      {/* Ratings + reviewer */}
+      {/* Ratings and Bio */}
       <div className="px-4 pt-4">
         <div className="flex items-center gap-2 mb-1">
           <div className="flex items-center">
@@ -55,7 +57,7 @@ export default function VendorCard({ vendor }) {
               <svg
                 key={i}
                 className={`w-4 h-4 ${
-                  i < Math.round(vendor.avgRating)
+                  i < Math.round(vendor.avgRating || 0)
                     ? 'text-yellow-400'
                     : 'text-gray-300'
                 }`}
@@ -71,7 +73,6 @@ export default function VendorCard({ vendor }) {
           </span>
         </div>
 
-        {/* Bio or description */}
         <p className="text-sm text-gray-700 pb-4 line-clamp-3">
           {vendor.bio ||
             'Experienced vendor providing top-quality interior solutions.'}

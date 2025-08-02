@@ -2,12 +2,15 @@ import Image from "next/image";
 import kitchenImg from "../public/mainpageimg1.jpg";
 import factoryImg from "@/public/mainpageimg1.jpg";
 import Link from "next/link";
+import DelayedPopupForm from "@/components/DelayedPopupForm";
 import ContactForm from "@/components/ContactForm";
 import { client } from "@/lib/sanity";
 import connectMongo from "@/lib/mongoose";
+import FAQSection from "@/components/FAQSection";
 import User from "@/models/User";
 import Review from "@/models/Review";
 import Hero from "@/components/Hero";
+import TopCities from "@/components/TopCities";
 import VendorCardWithSlideshow from "@/components/VendorCardWithSlideshow";
 import { getTrendingBlogs } from '@/lib/queries';
 
@@ -58,6 +61,17 @@ async function getBlogs() {
 }`;
 
   return await client.fetch(query);
+}
+async function getVendors() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/vendors`, {
+    cache: 'no-store',
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch vendors');
+  }
+
+  return res.json();
 }
 
 export default async function HomePage() {
@@ -125,6 +139,8 @@ export default async function HomePage() {
           }`,
         }}
       />
+
+      <DelayedPopupForm />
 
 
     <section className="bg-white min-h-screen">
@@ -233,37 +249,40 @@ export default async function HomePage() {
         </div>
       </div>
 
-      <section className="max-w-7xl mx-auto px-4 py-10">
-        <h2 className="text-2xl font-bold mb-4">🔥 Trending Blogs</h2>
+<TopCities/>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {trendingBlogs.map((blog) => (
-            <Link
-              key={blog._id}
-              href={`/blog/${blog.slug.current}`}
-              className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition"
-            >
-              <div className="h-48 relative">
-              <Image
-  src={blog.mainImage?.asset?.url || '/placeholder.jpg'}
-  alt={blog.title}
-  fill
-  className="object-cover"
-/>
+<section className="max-w-7xl mx-auto px-6 py-12">
+  <h2 className="text-2xl font-semibold mb-6 text-gray-800">🔥 Trending Blogs</h2>
 
-              </div>
-
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-900">{blog.title}</h3>
-                <p className="text-sm text-gray-500 mt-1">
-                  By {blog.author?.name || 'Unknown'} •{' '}
-                  {new Date(blog.publishedAt).toLocaleDateString()}
-                </p>
-              </div>
-            </Link>
-          ))}
+  <div className="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide">
+    {trendingBlogs.map((blog) => (
+      <Link
+        key={blog._id}
+        href={`/blog/${blog.slug.current}`}
+        className="min-w-[300px] w-[300px] bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden"
+      >
+        <div className="w-full h-40 relative">
+          <Image
+            src={blog.mainImage?.asset?.url || '/placeholder.jpg'}
+            alt={blog.title}
+            fill
+            className="object-cover rounded-t-lg"
+          />
         </div>
-      </section>
+
+        <div className="p-4">
+          <h3 className="text-lg font-semibold text-gray-900">{blog.title}</h3>
+          <p className="text-sm text-gray-500 mt-1">
+            By {blog.author?.name || 'Unknown'} •{' '}
+            {new Date(blog.publishedAt).toLocaleDateString('en-GB')}
+          </p>
+        </div>
+      </Link>
+    ))}
+  </div>
+</section>
+
+
 
       
 
@@ -288,12 +307,21 @@ export default async function HomePage() {
 
       <ContactForm />
 
- {/* Vendors */}
-     <div className="grid grid-cols-1  ml-5 mb-10 sm:grid-cols-2 lg:grid-cols-3 gap-1">
-  {vendors.map((vendor) => (
-    <VendorCardWithSlideshow key={vendor._id} vendor={vendor} />
-  ))}
-</div>
+<div className="p-6">
+      <h1 className="text-2xl font-bold mb-6">Explore Our Designers</h1>
+
+      {vendors.length ? (
+        <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {vendors.map((vendor) => (
+            <VendorCardWithSlideshow key={vendor._id} vendor={vendor} />
+          ))}
+        </div>
+      ) : (
+        <p>No vendors found.</p>
+      )}
+    </div>
+
+<FAQSection/>
 
 
 

@@ -5,18 +5,19 @@ import Review from "@/models/Review";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  await connectMongo();
-  const designers = await User.find({ role: "designer" }).select(
-    "name _id slug workingSince location profileImage bio avgRating reviewCount portfolioImages"
-  );
+  try {
+    await connectMongo();
+    const vendors = await User.find({ role: "designer" }).lean();
 
-  return NextResponse.json(designers);
+    return new Response(JSON.stringify(vendors), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.error("Error fetching vendors:", error);
+    return new Response(JSON.stringify({ error: "Server error" }), { status: 500 });
+  }
 }
-
-function slugify(name) {
-  return name.toLowerCase().replace(/\s+/g, "-").replace(/[^\w\-]+/g, "");
-}
-
 export async function POST(req) {
   try {
     await connectMongo();

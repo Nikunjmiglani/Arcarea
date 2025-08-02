@@ -3,7 +3,7 @@ import { client } from '@/lib/sanity'
 
 export async function getLatestBlogs() {
   const query = `
-    *[_type == "blog"] | order(_createdAt desc)[0...10] {
+    *[_type == "post"] | order(_createdAt desc)[0...10] {
       title,
       slug,
       image
