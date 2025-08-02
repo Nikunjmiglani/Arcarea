@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaGoogle } from "react-icons/fa";
+
 
 export default function Footer() {
   return (
@@ -56,6 +57,15 @@ export default function Footer() {
             <a href="https://www.linkedin.com/company/arcarea-official/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="hover:text-white">
               <FaLinkedinIn />
             </a>
+            <a
+  href="https://www.google.com/search?q=ArcArea&ludocid=YOUR_PLACE_ID"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="hover:text-white"
+>
+  <FaGoogle />
+</a>
+
           </div>
         </div>
       </div>
