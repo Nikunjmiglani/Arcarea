@@ -1,9 +1,10 @@
 // components/VendorCardWithSlideshow.jsx
 
 export default function VendorCardWithSlideshow({ vendor }) {
-  const profileImage = vendor.profileImage?.trim()
-    ? vendor.profileImage
-    : "/default-profile.png";
+ const profileImage = (vendor?.profileImage || "").trim()
+  ? vendor.profileImage
+  : "/default-profile.png";
+
 
   return (
     <div className="border rounded-lg overflow-hidden shadow-sm">
