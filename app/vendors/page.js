@@ -1,16 +1,16 @@
-// components/VendorCardWithSlideshow.jsx
-
 export default function VendorCardWithSlideshow({ vendor }) {
- const profileImage = (vendor?.profileImage || "").trim()
-  ? vendor.profileImage
-  : "/default-profile.png";
+  if (!vendor) return null; // Prevent build-time crash
 
+  const profileImage =
+    (vendor?.profileImage || "").trim() !== ""
+      ? vendor.profileImage
+      : "/default-profile.png";
 
   return (
     <div className="border rounded-lg overflow-hidden shadow-sm">
       <img
         src={profileImage}
-        alt={vendor.name}
+        alt={vendor.name || "Vendor"}
         className="w-full h-48 object-cover"
         onError={(e) => {
           e.target.onerror = null;
@@ -19,8 +19,10 @@ export default function VendorCardWithSlideshow({ vendor }) {
       />
 
       <div className="p-4">
-        <h2 className="text-xl font-semibold">{vendor.name}</h2>
-        <p className="text-sm text-gray-600">{vendor.location || "Location not provided"}</p>
+        <h2 className="text-xl font-semibold">{vendor.name || "Unnamed Vendor"}</h2>
+        <p className="text-sm text-gray-600">
+          {vendor.location || "Location not provided"}
+        </p>
         <p className="text-sm mt-2">{vendor.bio || "No bio available."}</p>
       </div>
     </div>
