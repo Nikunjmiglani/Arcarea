@@ -9,7 +9,7 @@ export default function AdminPage() {
     price: "",
     category: "Interior",
     subcategory: "Residential Interior",
-    image: "",
+    image: null,
     vendor: "",
   });
 
@@ -18,18 +18,20 @@ export default function AdminPage() {
   const [newVendorData, setNewVendorData] = useState({
     name: "",
     email: "",
-    profileImage: "",
+    profileImage: null,
     location: "",
     bio: "",
     skills: "",
-    portfolioImages: "",
+    portfolioImages: [],
     workingSince: "",
-
-    // New: Review fields
     reviewName: "",
     reviewEmail: "",
     reviewRating: "",
     reviewMessage: "",
+    projectTypes: [],
+    projectExecutionType: "",
+    budgetRange: "",
+    turnaroundTime: "",
   });
 
   const subcategoriesMap = {
@@ -44,6 +46,18 @@ export default function AdminPage() {
     Architecture: ["Residential Architecture", "Landscape Architecture"],
     Furniture: ["Custom Furniture", "Modular Furniture", "Bespoke Furniture"],
   };
+
+  const projectTypeOptions = ["Residential", "Commercial", "Office", "Industrial", "Retail"];
+  const executionTypeOptions = ["Turnkey", "Consultancy"];
+  const budgetOptions = [
+    "1L - 5L",
+    "5L - 10L",
+    "10L - 15L",
+    "15L - 25L",
+    "25L - 35L",
+    "35L and above",
+  ];
+  const turnaroundOptions = ["1-5 days", "10-15 days"];
 
   useEffect(() => {
     fetch("/api/vendors")
@@ -67,69 +81,109 @@ export default function AdminPage() {
   };
 
   const handleNewVendorChange = (e) => {
-    const { name, value } = e.target;
-    setNewVendorData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, files } = e.target;
+
+    if (files) {
+      setNewVendorData((prev) => ({
+        ...prev,
+        [name]: name === "portfolioImages" ? files : files[0],
+      }));
+    } else {
+      setNewVendorData((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleMultiSelectChange = (e, name) => {
+    const selected = Array.from(e.target.selectedOptions, (option) => option.value);
+    setNewVendorData((prev) => ({ ...prev, [name]: selected }));
+  };
+
+  const handleProfileImageUpload = async (file) => {
+    const imageData = new FormData();
+    imageData.append("file", file);
+    imageData.append("upload_preset", "unsigned_upload");
+    imageData.append("folder", "vendor-images");
+
+    const uploadRes = await fetch("https://api.cloudinary.com/v1_1/diq3lm3nc/image/upload", {
+      method: "POST",
+      body: imageData,
+    });
+
+    const uploadResult = await uploadRes.json();
+    return uploadResult.secure_url;
+  };
+
+  const handlePortfolioUpload = async (files) => {
+    const uploads = await Promise.all(
+      Array.from(files).map(async (file) => {
+        const imageData = new FormData();
+        imageData.append("file", file);
+        imageData.append("upload_preset", "unsigned_upload");
+        imageData.append("folder", "vendor-images");
+
+        const uploadRes = await fetch("https://api.cloudinary.com/v1_1/diq3lm3nc/image/upload", {
+          method: "POST",
+          body: imageData,
+        });
+
+        const uploadResult = await uploadRes.json();
+        return uploadResult.secure_url;
+      })
+    );
+    return uploads;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     let vendorId = formData.vendor;
 
-    // Create new vendor if needed
     if (addNewVendor && newVendorData.name && newVendorData.email) {
-     const res = await fetch("/api/vendors", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    name: newVendorData.name,
-    email: newVendorData.email,
-    profileImage: newVendorData.profileImage,
-    location: newVendorData.location,
-    bio: newVendorData.bio,
-    skills: newVendorData.skills.split(",").map((s) => s.trim()),
-    portfolioImages: newVendorData.portfolioImages.split(",").map((url) => url.trim()),
+      const profileImageUrl = newVendorData.profileImage
+        ? await handleProfileImageUpload(newVendorData.profileImage)
+        : "";
 
-    // ✅ FIXED: Include this
-    workingSince: newVendorData.workingSince,
+      const portfolioUrls = newVendorData.portfolioImages.length
+        ? await handlePortfolioUpload(newVendorData.portfolioImages)
+        : [];
 
-    // Review fields
-    reviewName: newVendorData.reviewName,
-    reviewEmail: newVendorData.reviewEmail,
-    reviewRating: newVendorData.reviewRating,
-    reviewMessage: newVendorData.reviewMessage,
-  }),
-});
-
-
+      const res = await fetch("/api/vendors", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...newVendorData,
+          profileImage: profileImageUrl,
+          portfolioImages: portfolioUrls,
+          skills: newVendorData.skills.split(",").map((s) => s.trim()),
+          projectType: newVendorData.projectTypes,
+          executionType: newVendorData.projectExecutionType,
+        }),
+      });
 
       const data = await res.json();
       vendorId = data._id;
-
-      // ✅ Submit review for new vendor
-      if (
-        newVendorData.reviewName &&
-        newVendorData.reviewEmail &&
-        newVendorData.reviewRating
-      ) {
-        await fetch("/api/reviews", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            vendor: vendorId,
-            name: newVendorData.reviewName,
-            email: newVendorData.reviewEmail,
-            rating: Number(newVendorData.reviewRating),
-            message: newVendorData.reviewMessage || "",
-          }),
-        });
-      }
     }
 
-    // Create service
+    let uploadedImageUrl = "";
+
+    if (formData.image) {
+      const imageData = new FormData();
+      imageData.append("file", formData.image);
+      imageData.append("upload_preset", "unsigned_upload");
+      imageData.append("folder", "vendor-images");
+
+      const uploadRes = await fetch("https://api.cloudinary.com/v1_1/diq3lm3nc/image/upload", {
+        method: "POST",
+        body: imageData,
+      });
+
+      const uploadResult = await uploadRes.json();
+      uploadedImageUrl = uploadResult.secure_url;
+    }
+
     const res = await fetch("/api/services", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...formData, vendor: vendorId }),
+      body: JSON.stringify({ ...formData, image: uploadedImageUrl, vendor: vendorId }),
     });
 
     if (res.ok) {
@@ -140,24 +194,27 @@ export default function AdminPage() {
         price: "",
         category: "Interior",
         subcategory: "Residential Interior",
-        image: "",
+        image: null,
         vendor: "",
       });
       setNewVendorData({
-  name: "",
-  email: "",
-  profileImage: "",
-  location: "",
-  bio: "",
-  skills: "",
-  portfolioImages: "",
-  workingSince: "",
-  reviewName: "",
-  reviewEmail: "",
-  reviewRating: "",
-  reviewMessage: "",
-});
-
+        name: "",
+        email: "",
+        profileImage: null,
+        location: "",
+        bio: "",
+        skills: "",
+        portfolioImages: [],
+        workingSince: "",
+        reviewName: "",
+        reviewEmail: "",
+        reviewRating: "",
+        reviewMessage: "",
+        projectTypes: [],
+        projectExecutionType: "",
+        budgetRange: "",
+        turnaroundTime: "",
+      });
       setAddNewVendor(false);
     } else {
       alert("Error creating service");
@@ -184,7 +241,7 @@ export default function AdminPage() {
           ))}
         </select>
 
-        <input type="text" name="image" placeholder="Image URL" value={formData.image} onChange={handleChange} className="w-full border p-2 rounded" />
+        <input type="file" accept="image/*" onChange={(e) => setFormData((prev) => ({ ...prev, image: e.target.files[0] }))} className="w-full border p-2 rounded" />
 
         <select value={formData.vendor || ""} onChange={handleVendorChange} className="w-full border p-2 rounded">
           <option value="">-- Select Vendor --</option>
@@ -194,30 +251,64 @@ export default function AdminPage() {
           <option value="add_new">+ Add New Vendor</option>
         </select>
 
-        {/* New Vendor Form */}
-       {addNewVendor && (
-  <div className="space-y-2 bg-gray-50 p-4 rounded border mt-2">
-    <h2 className="text-lg font-semibold">New Vendor Details</h2>
-    <input type="text" name="name" placeholder="Vendor Name" value={newVendorData.name} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-    <input type="email" name="email" placeholder="Vendor Email" value={newVendorData.email} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-    <input type="text" name="profileImage" placeholder="Vendor Profile Image URL" value={newVendorData.profileImage} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-    <input type="text" name="location" placeholder="Vendor Location" value={newVendorData.location} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+        {addNewVendor && (
+          <div className="space-y-2 bg-gray-50 p-4 rounded border mt-2">
+            <h2 className="text-lg font-semibold">New Vendor Details</h2>
+            <input type="text" name="name" placeholder="Vendor Name" value={newVendorData.name} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <input type="email" name="email" placeholder="Vendor Email" value={newVendorData.email} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <input type="file" accept="image/*" onChange={(e) =>
+  setNewVendorData((prev) => ({
+    ...prev,
+    portfolioImages: Array.from(e.target.files),
+  }))
+}
+ className="w-full border p-2 rounded" />
+            <input type="text" name="location" placeholder="Vendor Location" value={newVendorData.location} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <input type="text" name="workingSince" placeholder="Working Since (e.g., 2018)" value={newVendorData.workingSince} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <textarea name="bio" placeholder="Vendor Bio" value={newVendorData.bio} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <input type="text" name="skills" placeholder="Vendor Skills (comma separated)" value={newVendorData.skills} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <input type="file" accept="image/*" multiple onChange={(e) =>
+  setNewVendorData((prev) => ({
+    ...prev,
+    portfolioImages: Array.from(e.target.files),
+  }))
+} className="w-full border p-2 rounded" />
 
-    {/* ✅ Working Since Field */}
-    <input type="text" name="workingSince" placeholder="Working Since (e.g., 2018)" value={newVendorData.workingSince} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <label className="block font-medium">Project Type</label>
+            <select multiple onChange={(e) => handleMultiSelectChange(e, "projectTypes")} className="w-full border p-2 rounded">
+              {projectTypeOptions.map((opt) => (
+                <option key={opt} value={opt}>{opt}</option>
+              ))}
+            </select>
 
-    <textarea name="bio" placeholder="Vendor Bio" value={newVendorData.bio} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-    <input type="text" name="skills" placeholder="Vendor Skills (comma separated)" value={newVendorData.skills} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-    <input type="text" name="portfolioImages" placeholder="Portfolio Image URLs (comma separated)" value={newVendorData.portfolioImages} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <label className="block font-medium">Type of Project</label>
+            <select name="projectExecutionType" value={newVendorData.projectExecutionType} onChange={handleNewVendorChange} className="w-full border p-2 rounded">
+              {executionTypeOptions.map((opt) => (
+                <option key={opt} value={opt}>{opt}</option>
+              ))}
+            </select>
 
-    <h3 className="font-semibold mt-4">Initial Review</h3>
-    <input type="text" name="reviewName" placeholder="Reviewer Name" value={newVendorData.reviewName} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-    <input type="email" name="reviewEmail" placeholder="Reviewer Email" value={newVendorData.reviewEmail} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-    <input type="number" name="reviewRating" placeholder="Rating (1 to 5)" min="1" max="5" value={newVendorData.reviewRating} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-    <textarea name="reviewMessage" placeholder="Review Message" value={newVendorData.reviewMessage} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
-  </div>
-)}
+            <label className="block font-medium">Budget</label>
+            <select name="budgetRange" value={newVendorData.budgetRange} onChange={handleNewVendorChange} className="w-full border p-2 rounded">
+              {budgetOptions.map((opt) => (
+                <option key={opt} value={opt}>{opt}</option>
+              ))}
+            </select>
 
+            <label className="block font-medium">Turnaround Time</label>
+            <select name="turnaroundTime" value={newVendorData.turnaroundTime} onChange={handleNewVendorChange} className="w-full border p-2 rounded">
+              {turnaroundOptions.map((opt) => (
+                <option key={opt} value={opt}>{opt}</option>
+              ))}
+            </select>
+
+            <h3 className="font-semibold mt-4">Initial Review</h3>
+            <input type="text" name="reviewName" placeholder="Reviewer Name" value={newVendorData.reviewName} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <input type="email" name="reviewEmail" placeholder="Reviewer Email" value={newVendorData.reviewEmail} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <input type="number" name="reviewRating" placeholder="Rating (1 to 5)" min="1" max="5" value={newVendorData.reviewRating} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+            <textarea name="reviewMessage" placeholder="Review Message" value={newVendorData.reviewMessage} onChange={handleNewVendorChange} className="w-full border p-2 rounded" />
+          </div>
+        )}
 
         <button type="submit" className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
           Create Service

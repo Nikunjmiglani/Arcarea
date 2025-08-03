@@ -1,34 +1,27 @@
-// app/vendors/page.js
-import VendorCardWithSlideshow from '@/components/VendorCardWithSlideshow';
+// components/VendorCardWithSlideshow.jsx
 
-async function getVendors() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/vendors`, {
-    cache: 'no-store',
-  });
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch vendors');
-  }
-
-  return res.json();
-}
-
-export default async function VendorsPage() {
-  const vendors = await getVendors();
+export default function VendorCardWithSlideshow({ vendor }) {
+  const profileImage = vendor.profileImage?.trim()
+    ? vendor.profileImage
+    : "/default-profile.png";
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Explore Our Designers</h1>
+    <div className="border rounded-lg overflow-hidden shadow-sm">
+      <img
+        src={profileImage}
+        alt={vendor.name}
+        className="w-full h-48 object-cover"
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src = "/default-profile.png";
+        }}
+      />
 
-      {vendors.length ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {vendors.map((vendor) => (
-            <VendorCardWithSlideshow key={vendor._id} vendor={vendor} />
-          ))}
-        </div>
-      ) : (
-        <p>No vendors found.</p>
-      )}
+      <div className="p-4">
+        <h2 className="text-xl font-semibold">{vendor.name}</h2>
+        <p className="text-sm text-gray-600">{vendor.location || "Location not provided"}</p>
+        <p className="text-sm mt-2">{vendor.bio || "No bio available."}</p>
+      </div>
     </div>
   );
 }

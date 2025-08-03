@@ -1,5 +1,5 @@
-// /app/api/vendors/route.js
 import connectMongo from "@/lib/mongoose";
+import slugify from "slugify";
 import User from "@/models/User";
 import Review from "@/models/Review";
 import { NextResponse } from "next/server";
@@ -8,7 +8,6 @@ export async function GET() {
   try {
     await connectMongo();
     const vendors = await User.find({ role: "designer" }).lean();
-
     return new Response(JSON.stringify(vendors), {
       status: 200,
       headers: { "Content-Type": "application/json" },
@@ -18,6 +17,7 @@ export async function GET() {
     return new Response(JSON.stringify({ error: "Server error" }), { status: 500 });
   }
 }
+
 export async function POST(req) {
   try {
     await connectMongo();
@@ -32,12 +32,16 @@ export async function POST(req) {
         role: "designer",
         slug: slugify(body.name),
         profileImage: body.profileImage || "",
-        location: body.location || "",
+        portfolioImages: Array.isArray(body.portfolioImages) ? body.portfolioImages : [],
         phone: body.phone || "",
         bio: body.bio || "",
         skills: Array.isArray(body.skills) ? body.skills : [],
-        portfolioImages: Array.isArray(body.portfolioImages) ? body.portfolioImages : [],
-        workingSince: body.workingSince || "", 
+        workingSince: body.workingSince || "",
+        location: body.location || "",
+        projectType: Array.isArray(body.projectType) ? body.projectType : [],
+        executionType: body.executionType || "",
+        budgetRange: body.budgetRange || "",
+        turnaroundTime: body.turnaroundTime || "",
       });
 
       if (
