@@ -7,6 +7,7 @@ import ContactForm from "@/components/ContactForm";
 import { client } from "@/lib/sanity";
 import connectMongo from "@/lib/mongoose";
 import FAQSection from "@/components/FAQSection";
+import BlogSection from '@/components/BlogSection';
 import User from "@/models/User";
 import Review from "@/models/Review";
 import Hero from "@/components/Hero";
@@ -252,7 +253,7 @@ export default async function HomePage() {
 <TopCities/>
 
 <section className="max-w-7xl mx-auto px-6 py-12">
-  <h2 className="text-2xl font-semibold mb-6 text-gray-800">🔥 Trending Blogs</h2>
+  <h2 className="text-2xl font-semibold mb-6 text-gray-800">🔥 Latest Design Trends</h2>
 
   <div className="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide">
     {trendingBlogs.map((blog) => (
@@ -321,45 +322,16 @@ export default async function HomePage() {
       )}
     </div>
 
-<FAQSection/>
+
 
 
 
       {/* Banner */}
-      <div className="w-full">
+      <div className="w-full ml-3">
         <img src="/bannerimg.jpg" alt="Banner" className="w-full h-auto object-cover" />
       </div>
 
-      {/* Blogs */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <h2 className="text-2xl font-semibold mb-6 text-gray-800">Latest Blogs</h2>
-        <div className="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide">
-          {blogs.map((blog, index) => (
-  <Link
-    key={index}
-    href={`/blog/${blog.slug}`}
-    className="min-w-[300px] w-[300px] bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden"
-  >
-    {blog.image ? (
-      <div className="w-full h-40 relative">
-        <Image
-          src={blog.image}
-          alt={blog.title}
-          fill
-          className="object-cover rounded-t-lg"
-        />
-      </div>
-    ) : (
-      <div className="h-40 bg-gray-200 flex items-center justify-center text-gray-500">No Image</div>
-    )}
-    <div className="p-4">
-      <h3 className="text-lg font-semibold text-gray-800">{blog.title}</h3>
-    </div>
-  </Link>
-))}
-
-        </div>
-      </div>
+      <BlogSection blogs={blogs} />
 
       {/* CTA */}
       <div className="bg-black text-white py-16 text-center">
@@ -370,6 +342,8 @@ export default async function HomePage() {
         </Link>
       </div>
     </section>
+
+    <FAQSection/>
     </>
   );
 }
