@@ -7,14 +7,35 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     await connectMongo();
+
     const vendors = await User.find({ role: "designer" }).lean();
-    return new Response(JSON.stringify(vendors), {
+
+    const enrichedVendors = await Promise.all(
+      vendors.map(async (vendor) => {
+        const reviews = await Review.find({ vendor: vendor._id });
+        const reviewCount = reviews.length;
+        const avgRating =
+          reviewCount > 0
+            ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviewCount
+            : 0;
+
+        return {
+          ...vendor,
+          avgRating: Number(avgRating.toFixed(1)),
+          reviewCount,
+        };
+      })
+    );
+
+    return NextResponse.json(enrichedVendors, {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
     console.error("Error fetching vendors:", error);
-    return new Response(JSON.stringify({ error: "Server error" }), { status: 500 });
+    return new Response(JSON.stringify({ error: "Server error" }), {
+      status: 500,
+    });
   }
 }
 
@@ -44,6 +65,7 @@ export async function POST(req) {
         turnaroundTime: body.turnaroundTime || "",
       });
 
+      // Optional review at vendor creation
       if (
         body.reviewName &&
         body.reviewEmail &&

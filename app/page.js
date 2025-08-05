@@ -13,6 +13,7 @@ import Review from "@/models/Review";
 import Hero from "@/components/Hero";
 import TopCities from "@/components/TopCities";
 import VendorCardWithSlideshow from "@/components/VendorCardWithSlideshow";
+import VendorSection from "@/components/VendorsSection";
 import { getTrendingBlogs } from '@/lib/queries';
 
 export const revalidate = 60;
@@ -54,15 +55,19 @@ const features = [
 ];
 
 async function getBlogs() {
- const query = `*[_type == "post"] | order(publishedAt desc)[0...10] {
-  title,
-  "slug": slug.current,
-  "image": mainImage.asset->url,
-  publishedAt
-}`;
+  const query = `*[_type == "post"] | order(publishedAt desc){
+    title,
+    "slug": slug.current,
+    "image": mainImage.asset->url,
+    publishedAt,
+    categories[]->{
+      title
+    }
+  }`;
 
   return await client.fetch(query);
 }
+
 async function getVendors() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/vendors`, {
     cache: 'no-store',
@@ -308,20 +313,8 @@ export default async function HomePage() {
 
       <ContactForm />
 
-<div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Explore Our Designers</h1>
 
-      {vendors.length ? (
-        <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {vendors.map((vendor) => (
-            <VendorCardWithSlideshow key={vendor._id} vendor={vendor} />
-          ))}
-        </div>
-      ) : (
-        <p>No vendors found.</p>
-      )}
-    </div>
-
+    <VendorSection/>
 
 
 
