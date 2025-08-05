@@ -328,7 +328,7 @@ export default async function HomePage() {
 
       {/* CTA */}
       <div className="bg-black text-white py-16 text-center">
-        <h2 className="text-3xl font-bold mb-4">Are You a Designer or Architect?</h2>
+        <h2 className="text-3xl text-white font-bold mb-4">Are You a Designer or Architect?</h2>
         <p className="mb-6 text-gray-300">Join our platform and start offering your services to 1000s of users.</p>
         <Link href="/register" className="inline-block bg-white text-black px-6 py-3 rounded hover:bg-gray-200">
           Join as Vendor
