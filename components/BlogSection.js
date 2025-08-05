@@ -79,6 +79,10 @@ export default function BlogSection({ blogs }) {
           </button>
         )}
 
+        <div className='mb-10'>
+          <h1 className='text-2xl font-mono'>Here are your guides:</h1>
+        </div>
+
         {/* Blog Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 transition-all duration-500">
           {visibleBlogs.length > 0 ? (
