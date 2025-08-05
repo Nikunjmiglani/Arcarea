@@ -65,92 +65,124 @@ export default function VendorProfilePage() {
   const displayedImages = vendor.portfolioImages?.slice(carouselIndex, carouselIndex + 6) || [];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 space-y-10">
-      <div className="bg-white rounded shadow overflow-hidden">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2">
-          {displayedImages.map((url, i) => (
-            <div key={i} className="relative h-48">
-              <Image
-                src={url}
-                alt={`Portfolio ${carouselIndex + i + 1}`}
-                fill
-                className="object-cover rounded"
-              />
-            </div>
-          ))}
-          {vendor.portfolioImages?.length > carouselIndex + 6 && (
-            <div className="relative h-48 bg-black bg-opacity-60 text-white flex items-center justify-center rounded">
-              <span className="text-lg font-semibold">+{vendor.portfolioImages.length - (carouselIndex + 6)} More</span>
-            </div>
-          )}
-        </div>
+    <div className="max-w-6xl mx-auto px-4 py-1 space-y-10">
+<div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
+  {/* Image Grid */}
+  <div className="grid grid-cols-3 gap-1">
+    {/* Left - Large image */}
+    <div className="col-span-2 h-96 relative">
+      <Image
+        src={vendor.portfolioImages?.[0] || "/default1.jpg"}
+        alt="Main"
+        fill
+        className="object-cover rounded-l-lg"
+      />
+    </div>
 
-        <div className="p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <div className="flex items-center gap-4">
-            <Image
-              src={vendor.profileImage || '/default-profile.png'}
-              alt={vendor.name}
-              width={80}
-              height={80}
-              className="rounded-full object-cover border"
-            />
-            <div>
-              <h1 className="text-2xl font-bold">{vendor.name}</h1>
-              <p className="text-gray-500">{vendor.location}</p>
-              <div className="flex items-center gap-3 mt-1 text-sm">
-  {/* Star Rating Icons */}
-  <div className="flex items-center">
-    {[...Array(5)].map((_, i) => (
-      <svg
-        key={i}
-        className={`w-4 h-4 ${
-          i < Math.round(Number(vendor.avgRating || 0))
-            ? 'text-yellow-400'
-            : 'text-gray-300'
-        }`}
-        viewBox="0 0 20 20"
-        fill="currentColor"
-      >
-        <path d="M10 15l-5.878 3.09 1.122-6.545L.488 6.91l6.567-.955L10 0l2.945 5.955 6.567.955-4.756 4.635 1.122 6.545z" />
-      </svg>
-    ))}
+    {/* Right - Two stacked images */}
+    <div className="flex flex-col gap-1">
+      <div className="h-48 relative">
+        <Image
+          src={vendor.portfolioImages?.[1] || "/default2.jpg"}
+          alt="Sub1"
+          fill
+          className="object-cover rounded-tr-lg"
+        />
+      </div>
+      <div className="h-48 relative">
+        <Image
+          src={vendor.portfolioImages?.[2] || "/default3.jpg"}
+          alt="Sub2"
+          fill
+          className="object-cover"
+        />
+        {vendor.portfolioImages?.length > 6 && (
+          <div className="absolute inset-0 bg-black bg-opacity-60 text-white flex items-center justify-center rounded">
+            <span className="text-lg font-semibold">
+              +{vendor.portfolioImages.length - 6} More
+            </span>
+          </div>
+        )}
+      </div>
+    </div>
   </div>
 
-  {/* Rating Count */}
-  <span className="text-gray-600 text-xs">
-    ({vendor.reviewCount || reviews.length})
-  </span>
+  {/* Info Section */}
+  <div className="p-6 grid grid-cols-1 md:grid-cols-5 gap-6 items-start">
+    {/* Left Content (Vendor info + buttons) */}
+    <div className="md:col-span-3 w-full">
+      <h1 className="text-3xl font-extrabold text-gray-900">{vendor.name}</h1>
+      <p className="text-lg text-gray-600 font-medium">{vendor.location}</p>
 
-  {/* Verified + Tags */}
-  <span className="bg-green-100 text-green-800 px-2 py-0.5 rounded font-medium text-xs">
-    ✓ Verified
-  </span>
-  <span className="bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-xs">
-    Interior Designers
-  </span>
+      {/* Tags and Info */}
+      <div className="flex flex-wrap items-center gap-2 mt-2">
+        <span className="bg-green-800 text-white px-3 py-1 text-xl font-bold rounded-xl">
+          ★ {vendor.avgRating || "4.8"}
+        </span>
+        <span className="text-sm text-gray-700">
+          ({vendor.reviewCount || reviews.length} Ratings)
+        </span>
+
+        <span className="bg-green-700 text-white px-3 rounded-full py-1 text-lg font-bold">
+          ✓ Verified
+        </span>
+
+        <span className="bg-blue-500 text-white px-2 py-0.5 text-sm font-bold rounded">
+          Interior Designers
+        </span>
+      </div>
+
+      {/* Working Since & Status */}
+      <p className="mt-2 text-lg font-bold text-green-700">
+        {vendor.workingSince
+          ? `Working Since ${new Date().getFullYear() - parseInt(vendor.workingSince)} Years`
+          : ""}
+      </p>
+      <p className="text-sm text-gray-500 mt-1">
+        <span className="text-green-600 font-semibold">Open</span> until 10:00 PM
+      </p>
+
+      {/* CTA Buttons */}
+      <div className="mt-4 flex flex-wrap gap-3">
+        <a
+          href={`tel:${vendor.phone || "08123846197"}`}
+          className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 text-lg font-bold rounded-full shadow flex items-center gap-2"
+        >
+          📞 {vendor.phone || "08123846197"}
+        </a>
+
+        <button
+          onClick={() => {
+            const form = document.getElementById("form");
+            if (form) form.scrollIntoView({ behavior: "smooth" });
+          }}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 text-lg font-bold rounded-full shadow flex items-center gap-2"
+        >
+          ✉️ Enquire Now
+        </button>
+      </div>
+    </div>
+
+    {/* Right Content (Click to Rate) */}
+    <div className="md:col-span-2 flex flex-col items-start md:items-end gap-2 mt-4 md:mt-0">
+      <p className="text-sm text-gray-700 font-medium">Click to Rate</p>
+      <div className="flex gap-3 text-4xl text-gray-300 hover:text-yellow-400 cursor-pointer">
+        {[...Array(5)].map((_, i) => (
+          <button key={i} aria-label={`Rate ${i + 1} stars`}>
+            ☆
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
 </div>
 
-              <p className="text-green-600 mt-1 text-sm">{vendor.workingSince ? `${new Date().getFullYear() - parseInt(vendor.workingSince)} Years in Business` : ''}</p>
-            </div>
-          </div>
 
-          <div className="flex flex-col gap-3 items-start md:items-end">
-            <button
-              onClick={() => {
-                const form = document.getElementById("form");
-                if (form) form.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 flex items-center gap-2"
-            >
-              📩 Send Enquiry
-            </button>
-          </div>
-        </div>
-      </div>
+
 
      {/* Photos / Portfolio */}
       <div>
-        <h2 className="text-2xl mt-20 font-semibold mb-3">More Service Images</h2>
+        <h2 className="text-2xl mt-20 font-semibold mb-3">More Images</h2>
         <div className="flex overflow-x-auto gap-4 pb-2">
           {vendor.portfolioImages?.map((url, i) => (
             <Image
@@ -340,7 +372,7 @@ export default function VendorProfilePage() {
 
       {/* Booking Form */}
       <div id='form'>
-        <h2 className="text-2xl font-semibold mb-3">Request a Booking</h2>
+        <h2 className="text-3xl font-bold mb-3">Request a Booking</h2>
         <form onSubmit={handleBooking} className="bg-gray-100 p-4 rounded space-y-3">
           <input name="name" required placeholder="Your Name" className="w-full border p-2 rounded" />
           <input name="email" type="email" required placeholder="Your Email" className="w-full border p-2 rounded" />
