@@ -8,6 +8,7 @@ const nextConfig = {
       'www.miggla.com',
       'www.homemakersinterior.com',
       'www.nikunj.space',
+      'res.cloudinary.com',
     ],
   },
 };
